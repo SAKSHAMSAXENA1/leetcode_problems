@@ -15,14 +15,8 @@ public:
             {
                 u[s[i]].first=i;
             }
-        }
 
-        for(int i=n-1;i>=0;i--)
-        {
-            if(u[s[i]].second==-1) 
-            {
-                u[s[i]].second=i;
-            }   
+            u[s[i]].second=i;
         }
 
         for(auto it:u)
