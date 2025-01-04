@@ -7,24 +7,22 @@ public:
         for(char c='a';c<='z';c++)
         {
             u[c]={-1,-1};
+        }
 
-            for(int i=0;i<n;i++)
+        for(int i=0;i<n;i++)
+        {
+            if(u[s[i]].first==-1) 
             {
-                if(u[s[i]].first==-1) 
-                {
-                    u[s[i]].first=i;
-                    break;
-                }
+                u[s[i]].first=i;
             }
+        }
 
-            for(int i=n-1;i>=0;i--)
+        for(int i=n-1;i>=0;i--)
+        {
+            if(u[s[i]].second==-1) 
             {
-                if(u[s[i]].second==-1) 
-                {
-                    u[s[i]].second=i;
-                    break;
-                }   
-            }
+                u[s[i]].second=i;
+            }   
         }
 
         for(auto it:u)
@@ -37,9 +35,6 @@ public:
             res+=st.size();
         }
 
-        return res;
-        
-
-        
+        return res;   
     }
 };
