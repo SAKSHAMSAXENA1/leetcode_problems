@@ -17,47 +17,50 @@ class Trie{
         for(int i=31;i>=0;i--)
         {
             int bit=(num>>i)&1;
-            if(node->links[bit]==NULL){
+
+            if(node->links[bit]==NULL)
+            {
                 node->links[bit]=new Node();
             }
             node=node->links[bit];
         }
     }
 
-    int maxXorOfTrieWithNum(int &x){
-        int res=0;
+    int maxXorWithTrie(int &num)
+    {
         Node *node=root;
+        int res=0;
 
         for(int i=31;i>=0;i--)
         {
-            int desiredBit=!((x>>i)&1);
+            int desiredBit=!((num>>i)&1);
 
-            if(node->links[desiredBit]==NULL)
-            {
-                node=node->links[!desiredBit];
-            }
-            else
+            if(node->links[desiredBit])
             {
                 res=res|(1<<i);
                 node=node->links[desiredBit];
             }
-            
+            else
+            {
+                node=node->links[!desiredBit];
+            }
         }
 
         return res;
     }
 };
+
 class Solution {
 public:
     int findMaximumXOR(vector<int>& nums) {
-    Trie *obj=new Trie();
-    int maxi=0;
-    for(auto it:nums)
-    obj->insert(it);
+        Trie ob;
+        for(auto it:nums)
+        ob.insert(it);
 
-    for(auto x:nums)
-    maxi=max(maxi,obj->maxXorOfTrieWithNum(x));
+        int maxi=0;
+        for(auto it:nums)
+        maxi=max(maxi,ob.maxXorWithTrie(it));
 
-    return maxi;
+        return maxi;
     }
 };
