@@ -27,7 +27,11 @@ public:
             bool flag=true;
             for(auto it:b)
             {
-                if(it.second>a[i][it.first]) flag=false;
+                if(it.second>a[i][it.first])
+                {
+                    flag=false;
+                    break;
+                }
             }
 
             if(flag) res.push_back(words1[i]);
