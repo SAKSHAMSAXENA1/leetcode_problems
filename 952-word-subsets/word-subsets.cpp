@@ -13,10 +13,7 @@ public:
             {
                 temp[c]++;
                 b[c]=max(b[c],temp[c]);
-            }
-            
-
-            
+            }   
         }
 
         for(int i=0;i<n;i++)
