@@ -33,7 +33,6 @@ public:
             return false;*/
         }
         
-        bool res=false;
         Node *node=root;
         for(int i=index;i<n;i++)
         {
@@ -41,11 +40,11 @@ public:
             {
                 for(char j='a';j<='z';j++)
                 {
-                    if(node->links[j-'a']!=NULL)
-                    res=res| f(word,i+1,node->links[j-'a']);
+                    if(node->links[j-'a']!=NULL && f(word,i+1,node->links[j-'a']))
+                    return true;
                 }
 
-                return res;
+                return false;
             }
             else if(node->links[word[i]-'a']==NULL) return false;
             else
