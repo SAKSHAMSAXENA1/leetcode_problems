@@ -34,11 +34,12 @@ public:
         int n=s.size();
         if(index==n)
         {
+            return root->endsWith;
             /*if(!root || root->endsWith==false) return false;
             return true;*/
 
-            if(root && root->endsWith==true) return true;
-            return false;
+            /*if(root && root->endsWith==true) return true;
+            return false;*/
         }
 
         if(dp[index].find(root)!=dp[index].end()) return dp[index][root];
