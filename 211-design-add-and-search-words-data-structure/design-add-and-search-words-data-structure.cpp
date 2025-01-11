@@ -28,8 +28,9 @@ public:
         int n=word.size();
         if(index==n)
         {
-            if(root && root->endsWith) return true;
-            return false;
+            return root->endsWith;
+            /*if(root && root->endsWith) return true;
+            return false;*/
         }
         
         bool res=false;
