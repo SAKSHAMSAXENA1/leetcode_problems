@@ -15,20 +15,19 @@ public:
     int numDistinct(string s, string t) {
         int n=s.size(),m=t.size();
         //vector<vector<double>> dp(n+1, vector<double>(m+1,0));
-        vector<double> prev(m+1,0),cur(m+1,0);
+        vector<double> prev(m+1,0);
 
-        prev[0]=cur[0]=1;
+        prev[0]=1;
 
         for(int i=1;i<=n;i++)
         {
-            for(int j=1;j<=m && j<=i;j++)
+            for(int j=m;j>=1;j--)
             {
                 if(s[i-1]==t[j-1]) // match
-                cur[j]=prev[j-1]+prev[j];
-                else // non-match
-                cur[j]=prev[j];
+                prev[j]=prev[j-1]+prev[j];
+                //else // non-match
+                //cur[j]=prev[j];
             }
-            prev=cur;
         }
 
         return prev[m];
