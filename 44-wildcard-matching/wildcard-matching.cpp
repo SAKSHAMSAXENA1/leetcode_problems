@@ -24,7 +24,7 @@ public:
     }
     bool isMatch(string s, string p) {
         int n=s.size(),m=p.size();
-        vector<vector<int>> dp(n+1,vector<int> (m+1, false));
+        vector<vector<bool>> dp(n+1,vector<bool> (m+1, false));
         dp[0][0]=true;
 
         // for(int i=1;i<=n;i++) dp[i][0]=false;
