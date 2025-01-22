@@ -8,8 +8,8 @@ public:
         if(i==0) // string to be matched is empty
         {
             //return j==0; // return true if pattern to be matched is also empty, false otherwise
-            if(j==0) return true; // return true if pattern to be matched is also empty
-            else //return p[0]=='*' && j==1; // return true if p[0]=='*', false otherwise
+            /*if(j==0) return true; // return true if pattern to be matched is also empty
+            else //return p[0]=='*' && j==1; // return true if p[0]=='*', false otherwise*/
             {
                 while(j>0 && p[j-1]=='*') j--;
 
