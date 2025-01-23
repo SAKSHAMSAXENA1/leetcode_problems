@@ -18,10 +18,10 @@ int f(int i,int buy,vector<int> &prices, int &n,vector<vector<int>> &dp)
 
     return dp[i][buy]=profit;
 }
-    int maxProfit2(vector<int>& prices) {
+
+    int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        
-        vector<int> ahead(2,0),cur(2,0);
+        vector<vector<int>> dp(n+2, vector<int>(2,0));
 
         for(int i=n-1;i>=0;i--)
         {
@@ -30,23 +30,17 @@ int f(int i,int buy,vector<int> &prices, int &n,vector<vector<int>> &dp)
                 int profit=0;
                 if(buy)
                 {
-                    profit=max(-prices[i]+ahead[0],ahead[1]);
+                    profit=max(-prices[i]+dp[i+1][0],dp[i+1][1]);
                 }
                 else // not allowed to buy
                 {
-                    profit=max(prices[i]+ahead[1],ahead[0]);
+                    profit=max(prices[i]+dp[i+2][1],dp[i+1][0]);
                 }
 
-                cur[buy]=profit;
+                dp[i][buy]=profit;
             }
-            ahead=cur;
         }
 
-        return ahead[1];
-    }
-    int maxProfit(vector<int>& prices) {
-        int n=prices.size();
-        vector<vector<int>> dp(n+2, vector<int>(2,-1));
-        return f(0,1,prices,n,dp);
+        return dp[0][1];
     }
 };
