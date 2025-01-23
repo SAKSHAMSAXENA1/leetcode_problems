@@ -20,7 +20,7 @@ int f(int i,int remTrx,int buy,vector<int>& prices,int n,vector<vector<vector<in
 }
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(3, vector<int> (2,0)));
+        vector<vector<int>> ahead(3, vector<int> (2,0)),cur(3, vector<int> (2,0));
 
         for(int i=n-1;i>=0;i--)
         {
@@ -31,17 +31,18 @@ int f(int i,int remTrx,int buy,vector<int>& prices,int n,vector<vector<vector<in
                     int profit=0;
                     if(buy)
                     {
-                        profit=max(-prices[i]+dp[i+1][remTrx][0],dp[i+1][remTrx][1]);
+                        profit=max(-prices[i]+ahead[remTrx][0],ahead[remTrx][1]);
                     }
                     else
                     {
-                        profit=max(prices[i]+dp[i+1][remTrx-1][1],dp[i+1][remTrx][0]);
+                        profit=max(prices[i]+ahead[remTrx-1][1],ahead[remTrx][0]);
                     }
 
-                    dp[i][remTrx][buy]=profit;
+                    cur[remTrx][buy]=profit;
                 }
             }
+            ahead=cur;
         }
-        return dp[0][2][1];
+        return ahead[2][1];
     }
 };
