@@ -1,26 +1,15 @@
 class Solution {
 public:
-bool bfs(int node,vector<vector<int>> &graph,vector<int> &color)
+bool dfs(int node,vector<vector<int>> &graph, vector<int> &color)
 {
-    queue<int> q;
-    q.push(node);
-    color[node]=0;
-
-    while(!q.empty())
+    for(auto neighbour:graph[node])
     {
-        int curNode=q.front();
-        int curCol=color[curNode];
-        q.pop();
-
-        for(auto neighbour: graph[curNode])
+        if(color[neighbour]==-1)
         {
-            if(color[neighbour]==-1)
-            {
-                color[neighbour]=!color[curNode];
-                q.push(neighbour);
-            }
-            else if(color[neighbour]==color[curNode]) return false;
+            color[neighbour]=!color[node];
+            if(dfs(neighbour,graph,color)==false) return false;
         }
+        else if(color[neighbour]==color[node]) return false;
     }
 
     return true;
@@ -33,7 +22,8 @@ bool bfs(int node,vector<vector<int>> &graph,vector<int> &color)
         {
             if(color[i]==-1)
             {
-                if(bfs(i,graph,color)==false) return false;
+                color[i]=0;
+                if(dfs(i,graph,color)==false) return false;
             }
         }
 
