@@ -1,20 +1,14 @@
 class Solution {
 public:
     int tupleSameProduct(vector<int>& nums) {
-        //unordered_set<int> allNumbers(nums.begin(),nums.end());
-        unordered_map<int,int> u,cnt;
+        unordered_map<int,int> u;
         int res=0,n=nums.size();
 
         for(int i=0;i<n;i++)
         {
             for(int j=i+1;j<n;j++)
             {
-                //if(i==j) continue;
-
-                //if(u.find(nums[i]*nums[j])==u.end()) 
                 u[nums[i]*nums[j]]++;
-                
-                //cnt[nums[i]*nums[j]]=0;
             }
         }
 
