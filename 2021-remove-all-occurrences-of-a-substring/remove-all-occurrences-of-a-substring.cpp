@@ -6,30 +6,23 @@ public:
 
         for(int i=0;i<n;i++)
         {
-            if(s[i]!=part[m-1]) st.push(s[i]);
+            if(s[i]!=part[m-1] || st.size()<m-1) st.push(s[i]);
             else
             {
-                if(st.size()<m-1)
+                int j=m-2;
+                while(j>=0 && part[j]==st.top())
                 {
-                    st.push(s[i]);
+                    st.pop();
+                    j--;
                 }
-                else
-                {
-                    int j=m-2;
-                    while(j>=0 && part[j]==st.top())
-                    {
-                        st.pop();
-                        j--;
-                    }
 
-                    if(j>=0)
+                if(j>=0)
+                {
+                    j++;
+                    while(j<m)
                     {
+                        st.push(part[j]);
                         j++;
-                        while(j<m)
-                        {
-                            st.push(part[j]);
-                            j++;
-                        }
                     }
                 }
             }
