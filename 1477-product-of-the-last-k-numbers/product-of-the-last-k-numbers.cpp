@@ -17,7 +17,7 @@ vector<int> prefixProduct;
     int getProduct(int k) {
         int  n=prefixProduct.size();
         if(n-k-1<0) return 0;
-        return prefixProduct.back()/prefixProduct[n-k-1];
+        return prefixProduct[n-1]/prefixProduct[n-k-1];
     }
 };
 
