@@ -53,7 +53,7 @@ class DisjointSet{
 class Solution {
 public:
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int n=isConnected.size();
+        int n=isConnected.size(),cntUltimateParents=0;
         DisjointSet ds(n);
 
         for(int i=0;i<n;i++)
@@ -66,14 +66,15 @@ public:
                 }
             }
         }
-        unordered_set<int> uniqueParents;// each component has a unique parent
-        // so no of unique parents=no of components
+        // each component has a unique ultimate parent
+        // so no of unique ultimate parents=no of components
+        // for an ultimate parent, node=parent[node]
 
         for(int i=0;i<n;i++)
         {
-            uniqueParents.insert(ds.findUPar(i));
+            if(i==ds.findUPar(i)) cntUltimateParents++;
         }
 
-        return uniqueParents.size();
+        return cntUltimateParents;
     }
 };
