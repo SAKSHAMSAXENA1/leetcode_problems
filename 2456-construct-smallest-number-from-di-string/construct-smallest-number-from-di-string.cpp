@@ -3,11 +3,15 @@ public:
 bool f(int i,string &ds,string &pattern,vector<bool> &used,int &n)
 {
     if(i==n) return true;
-    for(char c='1';c<='9';c++)
+
+    char start='1',end='9';
+    if(i>=0)
     {
-        
-        if(i==-1 || (pattern[i]=='D' && ds.back()>c) || (pattern[i]=='I' && ds.back()<c))
-        {
+        if(pattern[i]=='D') end=ds.back()-1;
+        else start=ds.back()+1;
+    }
+    for(char c=start;c<=end;c++)
+    {
             if(used[c-'1']) continue;
 
             ds.push_back(c);
@@ -15,16 +19,6 @@ bool f(int i,string &ds,string &pattern,vector<bool> &used,int &n)
             if(f(i+1,ds,pattern,used,n)==true) return true;
             ds.pop_back();
             used[c-'1']=false;
-        }
-        /*else
-        {
-            if((pattern[i]=='D' && ds.back()<=c) || (pattern[i]=='I' && ds.back()>=c))
-            continue;
-
-            ds.push_back(c);
-            if(f(i+1,ds,pattern,n)==true) return true;
-            ds.pop_back(); 
-        }*/
     }
 
     return false;
