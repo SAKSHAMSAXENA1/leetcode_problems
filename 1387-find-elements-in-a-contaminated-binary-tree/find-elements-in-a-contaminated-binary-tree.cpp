@@ -14,12 +14,13 @@ public:
 unordered_set<int> values;
 void initialise(TreeNode *root,int value)
 {
+    if(!root) return;
     root->val=value;
     values.insert(value);
 
-    if(root->left) initialise(root->left,2*value+1);
+    initialise(root->left,2*value+1);
 
-    if(root->right) initialise(root->right,2*value+2); 
+    initialise(root->right,2*value+2); 
 }
     FindElements(TreeNode* root) {
         initialise(root,0);
