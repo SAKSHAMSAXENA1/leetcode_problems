@@ -12,32 +12,17 @@
 class FindElements {
 public:
 unordered_set<int> values;
-    void f(TreeNode *root, TreeNode *absoluteRoot)
-    {
-        if(root==absoluteRoot) 
-        {
-            root->val=0;
-            values.insert(root->val);
-        }
+void initialise(TreeNode *root,int value)
+{
+    root->val=value;
+    values.insert(value);
 
-        if(root->left)
-        {
-            int temp=2*root->val+1;
-            root->left->val=temp;
-            values.insert(temp);
-            f(root->left,absoluteRoot);
-        }
+    if(root->left) initialise(root->left,2*value+1);
 
-        if(root->right)
-        {
-            int temp=2*root->val+2;
-            root->right->val=temp;
-            values.insert(temp);
-            f(root->right,absoluteRoot);
-        }
-    }
+    if(root->right) initialise(root->right,2*value+2); 
+}
     FindElements(TreeNode* root) {
-        f(root,root);
+        initialise(root,0);
     }
     
     bool find(int target) {
