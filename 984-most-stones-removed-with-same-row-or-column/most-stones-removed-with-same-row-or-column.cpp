@@ -45,7 +45,7 @@ class DisjointSet{
 class Solution {
 public:
     int removeStones(vector<vector<int>>& stones) {
-       int n=stones.size(),maxi=0;
+       int n=stones.size();
        DisjointSet ds(stones);
        for(int i=0;i<n;i++)
        {
@@ -60,10 +60,8 @@ public:
                 ds.unionBySize(curNode,adjNode);
             }
         }
-        //maxi=max(maxi,ds.getSize(ds.findUPar(curNode)));
        }
-       /*if(maxi>1) return maxi-1;
-       else return 0;*/
+       
        int cnt=0;
        for(auto it:ds.parent)
        {
