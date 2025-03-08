@@ -35,12 +35,14 @@ int f(int i,int j,vector<int> &cuts,vector<vector<int>> &dp)
         cuts.insert(cuts.begin(),0);
         cuts.push_back(n);
 
-        vector<vector<int>> dp(m+2,vector<int>(m+2,-1));
+        vector<vector<int>> dp(m+2,vector<int>(m+2,0));
 
-        for(int j=1;j<m+2;j++) dp[j-1][j]=0; // base case
+        // for(int j=1;j<m+2;j++) dp[j-1][j]=0; // base case
 
         for(int i=m;i>=0;i--)
         {
+            // i==j-1 or i+1==j is base case which is already handled above
+            // now j must start from i+2, i.e the case just after base case
             for(int j=i+2;j<m+2;j++)
             {
                 int mini=INT_MAX;
