@@ -18,8 +18,7 @@ public:
 
         for(int i=0;i<n;i++)
             {
-                auto it=arr[i];
-                int el=it.first,wt=it.second.first,index=it.second.second;
+                int el=arr[i].first,wt=arr[i].second.first,index=arr[i].second.second;
                 if(u.find(el)==u.end())
                 {
                     res[index]=sum;
@@ -29,6 +28,7 @@ public:
                 {
                     res[index]=u[el];
                 }
+                // i=no of elements which have been considered to make sum 
                 if(i>=k)
                 {
                     if(pq.top()<wt)
@@ -41,11 +41,8 @@ public:
                 if(pq.size()<k)
                 {
                     pq.push(wt);
-                sum+=wt;
+                    sum+=wt;
                 }
-                
-
-                //lastEl=el;
             }
         return res;
     }
