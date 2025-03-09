@@ -3,7 +3,9 @@ class Solution {
 public:
     vector<long long> findMaxSum(vector<int>& nums1, vector<int>& nums2, int k) {
         priority_queue<int,vector<int>,greater<>> pq;
-        unordered_map<int,ll> u;
+        //unordered_map<int,ll> u;
+        int lastEl=0;
+        ll lastSum=0;
         int n=nums1.size();
         vector<ll> res(n,0);
         ll sum=0;
@@ -19,14 +21,15 @@ public:
         for(int i=0;i<n;i++)
             {
                 int el=arr[i].first,wt=arr[i].second.first,index=arr[i].second.second;
-                if(u.find(el)==u.end())
+                if(el>lastEl)
                 {
                     res[index]=sum;
-                    u[el]=sum;
+                    lastEl=el;
+                    lastSum=sum;
                 }
                 else
                 {
-                    res[index]=u[el];
+                    res[index]=lastSum;
                 }
                 // i=no of elements which have been considered to make sum 
                 if(i>=k)
