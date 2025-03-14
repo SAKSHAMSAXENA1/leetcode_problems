@@ -1,23 +1,23 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        int n=s.size(),r=0,l=0,maxLen=0;
-        unordered_map<char,int> u;
+        int hash[256];
+        for(int i=0;i<256;i++) hash[i]=-1; // last seen index of each char is -1
 
+        int l=0,r=0,n=s.size(),maxLen=0;
         while(r<n)
         {
-            u[s[r]]++; // (acquire)
-
-            while(u[s[r]]>1) // while window contains duplicate char
+            if(hash[s[r]]!=-1)//last seen index of char is not -1,i.e the char is seen previously
             {
-                u[s[l]]--; // (release)
-                if(u[s[l]]==0) u.erase(s[l]);
-                l++; // shrink the window (release)
+                if(l<=hash[s[r]]) // if the char is already seen in the window being considered
+                {
+                    l=hash[s[r]]+1; // to make the current window duplicate free
+                }
             }
 
-            // now window does not contain any duplicate char, so update the maxLen
             maxLen=max(maxLen,r-l+1);
-            r++; // expand the window (acquire)
+            hash[s[r]]=r; // update the last seen index of this char
+            r++;
         }
 
         return maxLen;
