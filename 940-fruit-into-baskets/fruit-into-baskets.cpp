@@ -9,14 +9,15 @@ public:
         {
             u[fruits[r]]++; // (acquire)
 
-            while(u.size()>2) //while the subarray has more than two distinct types of elements
+            if(u.size()>2) //if the subarray has more than two distinct types of elements
             {
                 u[fruits[l]]--; // (release)
                 if(u[fruits[l]]==0) u.erase(fruits[l]); // (release)      
                 l++; // shrink
             }
 
-            // now the subarray has <=2 distinct types of elements, so update maxLen
+            // if the subarray has <=2 distinct types of elements, only then update maxLen
+            if(u.size()<=2)
             maxLen=max(maxLen,r-l+1);
             r++; // expand
         }
