@@ -9,14 +9,16 @@ public:
         {
             cntOfZeros+=(nums[r]==0); // (acquire)
 
-            while(cntOfZeros>k)
+            if(cntOfZeros>k)
             {
                 cntOfZeros-=(nums[l]==0); // (release)
                 l++; // shrink the window (release)
             }
 
-            // now the window has <=k 0's
+            // update maxLen only when the window has <=k 0's
+            if(cntOfZeros<=k)
             maxLen=max(maxLen,r-l+1);
+
             r++; // expand the window (acquire)
         }
 
