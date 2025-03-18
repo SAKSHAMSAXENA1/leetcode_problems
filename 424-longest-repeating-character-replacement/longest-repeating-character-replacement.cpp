@@ -14,10 +14,6 @@ public:
             while((r-l+1)-maxf>k) // while conversions req >k,i.e condn of problem is false
             {
                 hash[s[l]-'A']--; // (release)
-
-                maxf=0;
-                for(int i=0;i<26;i++) maxf=max(maxf,hash[i]); // reupdate maxf while shrinking
-
                 l++; // shrink the window (release)
             }
 
