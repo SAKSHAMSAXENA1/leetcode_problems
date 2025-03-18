@@ -11,7 +11,7 @@ public:
 
             // conversions req=len-maxf=(r-l+1)-maxf
 
-            while((r-l+1)-maxf>k) // while conversions req >k,i.e condn of problem is false
+            if((r-l+1)-maxf>k) // if conversions req >k,i.e condn of problem is false
             {
                 hash[s[l]-'A']--; // (release)
                 l++; // shrink the window (release)
