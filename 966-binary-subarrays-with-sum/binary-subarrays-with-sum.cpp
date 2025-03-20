@@ -1,22 +1,29 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
-        unordered_map<int,int> u; // store no of times a prefixSum occurs
-        u[0]=1;
-        int prefixSum=0,cnt=0,k=goal;
+    int f(vector<int> &nums, int goal)
+    {
+        // cnt of subarrays whose sum<=goal
+        if(goal<0) return 0;
+        int l=0,r=0,n=nums.size(),cnt=0,sum=0;
 
-        for(auto it:nums)
+        while(r<n)
         {
-            prefixSum+=it; // x=prefixSum
-            int rem=prefixSum-k; // rem=x-k, check no of times rem occurs as a prefixSum in map
+            sum+=nums[r]; // (acquire)
 
-            if(u.find(rem)!=u.end())
+            while(sum>goal) 
             {
-                cnt+=u[rem];
+                sum-=nums[l]; // (release)
+                l++; // shrink the window (release)
             }
 
-            u[prefixSum]++;
+            // now sum of subarray/window <=goal
+            cnt+=r-l+1;
+            r++; // expand the window (acquire)
         }
+
         return cnt;
+    }
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        return f(nums,goal)-f(nums,goal-1);
     }
 };
