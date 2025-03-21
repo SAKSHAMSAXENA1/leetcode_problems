@@ -3,7 +3,7 @@ public:
     string minWindow(string s, string t) {
         int m=s.size(),n=t.size(),l=0,r=0,minLen=INT_MAX;
         int startIndex=-1,cntOfMatchedChar=0;
-        unordered_map<char,int> u;
+        int u[256]={0}; // hashmap to store freq of each char
 
         for(auto it:t) u[it]++;
 
