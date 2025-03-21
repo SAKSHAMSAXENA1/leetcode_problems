@@ -1,49 +1,37 @@
 class Solution {
 public:
-bool windowContainsT(int uS[],int uT[])
-{
-    for(int i=0;i<52;i++)
-    {
-        if(uS[i]<uT[i]) return false;
-    }
-    return true;
-}
     string minWindow(string s, string t) {
-        int uS[52]={0},uT[52]={0};
-        int l=0,r=0,n=s.size(),minLen=INT_MAX;
-        int ansL=-1,ansR=-1;
+        int m=s.size(),n=t.size(),l=0,r=0,minLen=INT_MAX;
+        int startIndex=-1,cntOfMatchedChar=0;
+        unordered_map<char,int> u;
 
-        for(auto it:t)
+        for(auto it:t) u[it]++;
+
+        while(r<m)
         {
-            if('a'<=it) uT[it-'a'+26]++;
-            else uT[it-'A']++;
-        }
+            if(u[s[r]]>0) cntOfMatchedChar++;
+            u[s[r]]--; // (acquire)
 
-        while(r<n)
-        {
-            if('a'<=s[r]) uS[s[r]-'a'+26]++; // (acquire)
-            else uS[s[r]-'A']++; // (acquire)
-
-            while(windowContainsT(uS,uT))
-            {
-                if(r-l+1<minLen)
+            while(cntOfMatchedChar==n) // while the window/substring contains t, shrink the 
+            {                       // window to get such shortest valid window containing t
+                if(r-l+1<minLen) // update the minLen
                 {
                     minLen=r-l+1;
-                    ansR=r;
-                    ansL=l;
+                    startIndex=l;
                 }
-                //minLen=min(minLen,r-l+1);
+
+                u[s[l]]++; // (release)
+                if(u[s[l]]>0) cntOfMatchedChar--;
                 
-                if('a'<=s[l]) uS[s[l]-'a'+26]--; // (release)
-                else uS[s[l]-'A']--; // (release)
                 l++; // shrink the window (release)
             }
 
-            // now the window does not contain t,so expand the window
+            // now the count of matched char is <n, so expand the window to acquire more char
+            // to match
             r++; // expand the window (acquire)
         }
 
-        if(minLen==INT_MAX) return ""; // whole of s does not contain t
-        return s.substr(ansL,ansR-ansL+1);
+        if(startIndex==-1) return "";
+        return s.substr(startIndex,minLen);
     }
 };
