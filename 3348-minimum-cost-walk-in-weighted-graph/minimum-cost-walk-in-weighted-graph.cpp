@@ -1,11 +1,11 @@
 class DisjointSet{
-    vector<int> size,parent;
-    unordered_map<int,int> compAndValue;
+    vector<int> size,parent,compAndValue;
 public:
     DisjointSet(int n)
     {
         size.resize(n+1,1);
         parent.resize(n+1);
+        compAndValue.resize(n+1,INT_MAX);
         for(int i=0;i<=n;i++) parent[i]=i;
     }
 
@@ -18,12 +18,6 @@ public:
     void unionBySize(int u,int v,int wt)
     {
         int ulp_u=findUPar(u),ulp_v=findUPar(v);
-
-        if(compAndValue.find(ulp_u)==compAndValue.end())
-        compAndValue[ulp_u]=INT_MAX;
-
-        if(compAndValue.find(ulp_v)==compAndValue.end())
-        compAndValue[ulp_v]=INT_MAX;
 
         if(ulp_u==ulp_v) // both u & v belong to the same component
         {
