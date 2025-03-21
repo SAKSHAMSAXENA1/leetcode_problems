@@ -27,7 +27,7 @@ public:
             }
 
             // now the count of matched char is <n, so expand the window to acquire more char
-            // to match
+            // in window to match
             r++; // expand the window (acquire)
         }
 
