@@ -1,16 +1,26 @@
 class Solution {
 public:
-void dfs(int &node,vector<vector<int>> &adj,vector<bool> &vis,vector<int> &component,
+void bfs(int &node,vector<vector<int>> &adj,vector<bool> &vis,vector<int> &component,
 int &componentIndex)
 {
     vis[node]=true;
     component[node]=componentIndex;
-
-    for(auto neighbour:adj[node])
+    queue<int> q;
+    q.push(node);
+    
+    while(!q.empty())
     {
-        if(!vis[neighbour])
+        int curNode=q.front();
+        q.pop();
+
+        for(auto neighbour:adj[curNode])
         {
-            dfs(neighbour,adj,vis,component,componentIndex);
+            if(!vis[neighbour])
+            {
+                vis[neighbour]=true;
+                q.push(neighbour);
+                component[neighbour]=componentIndex;
+            }
         }
     }
 }
@@ -30,7 +40,7 @@ int &componentIndex)
         {
             if(!vis[i])
             {
-                dfs(i,adj,vis,component,componentIndex);
+                bfs(i,adj,vis,component,componentIndex);
                 componentIndex++;
             }
     
