@@ -44,13 +44,12 @@ public:
     int countCompleteComponents(int n, vector<vector<int>>& edges) {
         DisjointSet ds(n);
         unordered_set<int> incompleteComponents;
-        unordered_map<int,int> neighbours;
+        vector<int> neighbours(n,0);
         int components=0;
         for(auto it:edges)
         {
             int u=it[0],v=it[1];
             ds.unionBySize(u,v);
-            //adj[u].push_back(v)
             neighbours[u]++;
             neighbours[v]++;
         }
