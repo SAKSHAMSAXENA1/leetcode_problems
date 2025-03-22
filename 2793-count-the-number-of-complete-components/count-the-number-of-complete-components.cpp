@@ -1,6 +1,6 @@
 class Solution {
 public:
-void dfs(int &node,vector<vector<int>> &adj,vector<bool> &vis,unordered_map<int,int> &component,
+void dfs(int &node,vector<vector<int>> &adj,vector<bool> &vis,vector<int> &component,
 int &componentIndex)
 {
     vis[node]=true;
@@ -15,7 +15,7 @@ int &componentIndex)
     }
 }
     int countCompleteComponents(int n, vector<vector<int>>& edges) {
-        unordered_map<int,int> component,componentSize;
+        vector<int> component(n,0),componentSize(n,0);
         vector<vector<int>> adj(n,vector<int>());
         vector<bool> vis(n,false);
         unordered_set<int> incompleteComponents;
@@ -31,10 +31,9 @@ int &componentIndex)
             if(!vis[i])
             {
                 dfs(i,adj,vis,component,componentIndex);
-                componentSize[componentIndex]=1;
                 componentIndex++;
             }
-            else
+    
             componentSize[component[i]]++;
         }
 
