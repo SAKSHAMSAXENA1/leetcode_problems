@@ -3,7 +3,7 @@ class Solution {
 public:
     int countPaths(int n, vector<vector<int>>& roads) {
         priority_queue<pair<long,int>,vector<pair<long,int>>,greater<>> pq;
-        vector<vector<vector<int>>> adj(n,vector<vector<int>>());
+        vector<vector<pair<int,int>>> adj(n,vector<pair<int,int>>());
         for(auto edge:roads)
         {
             int u=edge[0],v=edge[1],wt=edge[2];
@@ -23,7 +23,7 @@ public:
 
             for(auto it:adj[curNode])
             {
-                int neighbour=it[0],wt=it[1];
+                int neighbour=it.first,wt=it.second;
                 if(curDist+(long)wt<dist[neighbour])
                 {
                     dist[neighbour]=curDist+wt;
