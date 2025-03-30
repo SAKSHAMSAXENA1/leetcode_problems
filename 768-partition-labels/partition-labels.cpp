@@ -17,26 +17,28 @@ public:
         }
 
         sort(intervals.begin(),intervals.end());
-        vector<pair<int,int>> merged;
         int i=0;
         for(;i<26;i++)
         {
             if(intervals[i].first!=-1) break;
         }
-        merged.push_back(intervals[i]);
+
+        pair<int,int> last=intervals[i];
+        res.push_back(intervals[i].second-intervals[i].first+1);
         i++;
 
         for(;i<26;i++)
         {
-            if(intervals[i].first<merged.back().second) // merging intervals
-            merged.back().second=max(merged.back().second,intervals[i].second);
+            if(intervals[i].first<last.second) // merging intervals
+            {
+                last.second=max(last.second,intervals[i].second);
+                res.back()=last.second-last.first+1;
+            }
             else
-            merged.push_back(intervals[i]);
-        }
-
-        for(auto it:merged)
-        {
-            res.push_back(it.second-it.first+1);
+            {
+                last=intervals[i];
+                res.push_back(last.second-last.first+1);
+            }
         }
 
         return res;
