@@ -1,19 +1,21 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-        int n=height.size(),sum=0;
+        int n=height.size(),sum=0,maxi=0;
         vector<int> leftTallest(n,0); // prefixTallest
         vector<int> rightTallest(n,0); // suffixTallest
-        leftTallest[0]=height[0];
-        rightTallest[n-1]=height[n-1];
-        for(int i=1;i<n;i++)
+
+        for(int i=0;i<n;i++)
         {
-            leftTallest[i]=max(leftTallest[i-1],height[i]);
+            maxi=max(maxi,height[i]);
+            leftTallest[i]=maxi;
         }
 
-        for(int i=n-2;i>=0;i--)
+        maxi=0;
+        for(int i=n-1;i>=0;i--)
         {
-            rightTallest[i]=max(rightTallest[i+1],height[i]);
+            maxi=max(maxi,height[i]);
+            rightTallest[i]=maxi;
         }
 
         for(int i=0;i<n;i++)
