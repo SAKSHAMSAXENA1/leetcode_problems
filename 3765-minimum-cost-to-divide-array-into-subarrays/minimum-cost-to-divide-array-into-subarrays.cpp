@@ -30,8 +30,8 @@ ll f(int r,vector<int> &prefixNums,vector<int> &prefixCost,vector<ll> &dp,int &k
             prefixCost[i]=prefixCost[i-1]+cost[i];
         }
 
-        vector<ll> dp(n+1,-1);
-        dp[0]=0; // base case
+        vector<ll> dp(n+1,0);
+        // dp[0]=0; // base case
 
         for(int r=1;r<=n;r++)
         {
