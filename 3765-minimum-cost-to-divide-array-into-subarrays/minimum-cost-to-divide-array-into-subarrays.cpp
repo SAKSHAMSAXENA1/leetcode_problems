@@ -31,7 +31,22 @@ ll f(int r,vector<int> &prefixNums,vector<int> &prefixCost,vector<ll> &dp,int &k
         }
 
         vector<ll> dp(n+1,-1);
+        dp[0]=0; // base case
 
-        return f(n,prefixNums,prefixCost,dp,k,n);
+        for(int r=1;r<=n;r++)
+        {
+            ll mini=LLONG_MAX;
+            for(int l=r;l>=1;l--)
+            {
+                ll curCost=(ll)prefixNums[r-1]*(prefixCost[r-1]-((l>1)?prefixCost[l-1-1]:0))
+                +(ll)k*(prefixCost[n-1]-((l>1)?prefixCost[l-1-1]:0));
+                ll prevPartition=dp[l-1];
+                mini=min(mini,curCost+prevPartition);
+            }
+
+            dp[r]=mini;
+        }
+
+        return dp[n];
     }
 };
