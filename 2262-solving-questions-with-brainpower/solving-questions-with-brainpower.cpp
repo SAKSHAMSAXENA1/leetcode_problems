@@ -20,6 +20,19 @@ ll f(int index,vector<vector<int>> &questions,vector<ll> &dp,int &n)
     long long mostPoints(vector<vector<int>>& questions) {
         int n=questions.size();
         vector<ll> dp(n+1,-1);
-        return f(0,questions,dp,n);
+        dp[n]=0; // base case
+
+        for(int index=n-1;index>=0;index--)
+        {
+            ll take=questions[index][0];
+            int nextIndex=index+questions[index][1]+1;
+            if(nextIndex<n) 
+            take+=dp[nextIndex];
+
+            ll notTake=dp[index+1];
+
+            dp[index]=max(take,notTake);
+        }
+        return dp[0];
     }
 };
