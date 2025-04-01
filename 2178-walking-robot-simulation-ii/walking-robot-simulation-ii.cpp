@@ -18,7 +18,7 @@ int dir,x,y,width,height;
         num%=(2*(w+h)-4);
         else num%=4;
 
-        if(x==0 && y==0) 
+        if(num==0 && x==0 && y==0) 
         {
             dir=3; // initially robot was at (0,0) so now after movement it faces South
         }
