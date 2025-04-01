@@ -1,33 +1,29 @@
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& asteroids) {
-        stack<int> st;
         vector<int> res;
+
         for(auto it:asteroids)
         {
-            if(it>0) // asteroid is moving towards right
-            st.push(it);
-            else // it<0 -> asteroid is moving towards left
+            if(it>0) res.push_back(it); // asteroid moving towards right
+            else // asteroid moving towards left
             {
-                while(!st.empty() && st.top()>0 && st.top()<abs(it))
+                while(res.size() && res.back()>0 && res.back()<abs(it))
                 {
-                    st.pop();
+                    res.pop_back();
                 }
 
-                if(st.empty() || st.top()<0)
-                st.push(it);
-                else if(st.top()>0 && st.top()==abs(it))
-                st.pop();
+                if(res.size()==0 || res.back()<0)
+                {
+                    res.push_back(it);
+                }
+                else if(res.size() && res.back()==abs(it))
+                {
+                    res.pop_back();
+                }
             }
         }
 
-        while(!st.empty())
-        {
-            res.push_back(st.top());
-            st.pop();
-        }
-
-        reverse(res.begin(),res.end());
         return res;
     }
 };
