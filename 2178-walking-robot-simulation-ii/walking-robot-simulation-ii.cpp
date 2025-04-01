@@ -16,7 +16,7 @@ int dir,x,y,width,height;
     void step(int num) {
         if(2*(w+h)-4>0)
         num%=(2*(w+h)-4);
-        // else num%=4;
+        else num%=4;
 
         if(x==0 && y==0) 
         {
