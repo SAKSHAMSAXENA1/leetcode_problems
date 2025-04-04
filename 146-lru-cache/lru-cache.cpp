@@ -9,10 +9,8 @@ int n; // remaining space
     
     void makeRecentlyUsed(int key)
     {   
-        auto curAddress=u[key].first;
-
-        dll.erase(curAddress); // erase the node from dll
-        dll.push_front(key); // insert the node at front of dll to make if most recently used
+        dll.erase(u[key].first); // erase the node from dll
+        dll.push_front(key); // insert new node corr. to key at front of dll to make it MRU
         u[key].first=dll.begin(); // store the addr of new node corr. to key in map
     }
 
