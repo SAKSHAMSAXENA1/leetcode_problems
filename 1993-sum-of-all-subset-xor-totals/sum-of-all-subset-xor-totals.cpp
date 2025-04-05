@@ -1,18 +1,22 @@
 class Solution {
 public:
-int f(int i,int xorVal,vector<int> &nums,int &n)
+void f(int i,int xorVal,int &sum,vector<int> &nums,int &n)
 {
-    if(i==n) return xorVal;
+    if(i==n)
+    {
+        sum+=xorVal;
+        return;
+    }
+
     // take
-    int take=f(i+1,xorVal^nums[i],nums,n);
+    f(i+1,xorVal^nums[i],sum,nums,n);
 
     // notTake
-    int notTake=f(i+1,xorVal,nums,n);
-
-    return take+notTake;
+    f(i+1,xorVal,sum,nums,n);
 }
     int subsetXORSum(vector<int>& nums) {
-        int n=nums.size();
-        return f(0,0,nums,n);
+        int n=nums.size(),sum=0;;
+        f(0,0,sum,nums,n);
+        return sum;
     }
 };
