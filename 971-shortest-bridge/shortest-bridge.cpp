@@ -39,15 +39,7 @@ queue<pair<int,int>> &q,int &n)
             if(found) break;
         }
 
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<n;j++)
-            cout<<(int)vis[i][j]<<" ";
-            cout<<endl;
-        }
-
         // multi-source bfs from various cells of island 1
-
         while(!q.empty())
         {
             level++; // cells of island 1 -> at level 0, and so on
