@@ -36,14 +36,9 @@ bool f(int i,int sum,vector<int> &nums,vector<vector<int>> &dp,int &n)
 
         if(totSum%2) return false; // odd totSum can't be halved in integer division
         int target=totSum/2,n=nums.size();
-        vector<vector<bool>> dp(n+1,vector<bool>(target+1, false));
+        vector<bool> prev(target+1,false),cur(target+1,false);
 
-        /* base case
-        for(int sum=1;sum<=target;sum++)
-        dp[n][sum]=false;*/
-
-        for(int i=0;i<=n;i++)
-        dp[i][0]=true;
+        prev[0]=cur[0]=true;
 
         for(int i=n-1;i>=0;i--)
         {
@@ -52,14 +47,15 @@ bool f(int i,int sum,vector<int> &nums,vector<vector<int>> &dp,int &n)
                 bool take=false;
                 // take
                 if(nums[i]<=sum) 
-                take=dp[i+1][sum-nums[i]];
+                take=prev[sum-nums[i]];
 
-                bool notTake=dp[i+1][sum]; // not take
+                bool notTake=prev[sum]; // not take
 
-                dp[i][sum]=take | notTake;
+                cur[sum]=take | notTake;
             }
+            prev=cur;
         }
 
-        return dp[0][target];
+        return prev[target];
     }
 };
