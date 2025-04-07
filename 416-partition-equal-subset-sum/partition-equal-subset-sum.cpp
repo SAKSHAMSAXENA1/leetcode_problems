@@ -36,10 +36,11 @@ bool f(int i,int sum,vector<int> &nums,vector<vector<int>> &dp,int &n)
 
         if(totSum%2) return false; // odd totSum can't be halved in integer division
         int target=totSum/2,n=nums.size();
-        vector<vector<int>> dp(n+1,vector<int>(target+1, -1));
+        vector<vector<bool>> dp(n+1,vector<bool>(target+1, false));
 
+        /* base case
         for(int sum=1;sum<=target;sum++)
-        dp[n][sum]=false;
+        dp[n][sum]=false;*/
 
         for(int i=0;i<=n;i++)
         dp[i][0]=true;
