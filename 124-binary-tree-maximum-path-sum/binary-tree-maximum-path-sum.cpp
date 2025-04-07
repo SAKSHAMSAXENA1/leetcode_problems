@@ -27,7 +27,7 @@ int findMaxPathSum(TreeNode *root,int &maxSum)
     return root->val+max(leftSubtreeSum,rightSubtreeSum);
 }
     int maxPathSum(TreeNode* root) {
-        int maxSum=INT_MIN;
+        int maxSum=root->val;
         findMaxPathSum(root,maxSum);
         return maxSum;
     }
