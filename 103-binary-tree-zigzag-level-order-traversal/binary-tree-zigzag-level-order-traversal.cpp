@@ -22,21 +22,21 @@ public:
         {
             level++;
             int n=q.size();
-            vector<int> curLevel(n);
+            vector<int> curLevel;
 
             for(int i=0;i<n;i++)
             {
                 auto node=q.front();
                 q.pop();
 
-                if(level%2) // odd level->reverse order
-                curLevel[n-1-i]=node->val;
-                else // even level->normal order
-                curLevel[i]=node->val;
+                curLevel.push_back(node->val);
 
                 if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
             }
+
+            if(level%2)  // odd level->reverse order
+            reverse(curLevel.begin(),curLevel.end());
 
             res.push_back(curLevel);
         }
