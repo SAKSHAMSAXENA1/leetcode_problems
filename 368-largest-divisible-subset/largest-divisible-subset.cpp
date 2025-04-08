@@ -1,20 +1,24 @@
 class Solution {
 public:
     vector<int> largestDivisibleSubset(vector<int>& nums) {
+        int n=nums.size(),lastIndex=0,maxi=0;
+        vector<int> dp(n,1),divisor(n),res;
         sort(nums.begin(),nums.end());
-        int n=nums.size(),lastIndex=0,maxi=1;
-        vector<int> dp(n,1),hash(n,0);
 
         for(int i=0;i<n;i++)
-        {
-            hash[i]=i;
+        divisor[i]=i;
 
-            for(int prev=0;prev<i;prev++)
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
             {
-                if(nums[i]%nums[prev]==0 && dp[prev]+1>dp[i])
+                if(nums[i]%nums[j]==0)
                 {
-                    dp[i]=dp[prev]+1;
-                    hash[i]=prev;
+                    if(dp[j]+1>dp[i])
+                    {
+                        dp[i]=dp[j]+1;
+                        divisor[i]=j;
+                    }
                 }
             }
 
@@ -25,16 +29,15 @@ public:
             }
         }
 
-        vector<int> temp;
-        int index=lastIndex;
-        while(hash[index]!=index)
+        int i=lastIndex;
+        while(divisor[i]!=i)
         {
-            temp.push_back(nums[index]);
-            index=hash[index];
+            res.push_back(nums[i]);
+            i=divisor[i];
         }
-
-        temp.push_back(nums[index]);
-        reverse(temp.begin(),temp.end());
-        return temp;
+        res.push_back(nums[i]);
+        reverse(res.begin(),res.end());
+        
+        return res;
     }
 };
