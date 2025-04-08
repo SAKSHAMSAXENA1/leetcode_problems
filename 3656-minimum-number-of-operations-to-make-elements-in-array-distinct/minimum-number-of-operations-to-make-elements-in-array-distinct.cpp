@@ -7,23 +7,15 @@ public:
         u[it]++;
 
         if(u.size()==n) return 0;
-        int cnt=1;
 
-        while(true)
+        for(int i=0;i<n;i++)
         {
-            int k=0;
-            while(i<n && k<3 && u.size()!=n-i)
-            {
-                u[nums[i]]--;
-                if(u[nums[i]]==0) u.erase(nums[i]);
-                i++;
-                k++;
-            }
+            u[nums[i]]--;
+            if(u[nums[i]]==0) u.erase(nums[i]);
 
-            if(u.size()==n-i) break; // return cnt;
-            cnt++;
+            if(u.size()==n-i-1) return i/3+1;
         }
 
-        return cnt;
+        return -1;
     }
 };
