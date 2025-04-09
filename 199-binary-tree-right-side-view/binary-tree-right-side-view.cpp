@@ -15,13 +15,11 @@ public:
         vector<int> res;
         if(root==NULL) return res;
         queue<TreeNode *> q;
-        int curLevel=-1;
         q.push(root);
 
         // level order traversal
         while(!q.empty())
         {
-            curLevel++;
             int n=q.size(),rightMostElement=INT_MAX;
             
             for(int i=0;i<n;i++)
