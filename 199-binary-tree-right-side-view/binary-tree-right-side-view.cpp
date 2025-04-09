@@ -14,25 +14,27 @@ public:
     vector<int> rightSideView(TreeNode* root) {
         vector<int> res;
         if(root==NULL) return res;
-        queue<TreeNode *> q;
-        q.push(root);
+
+        map<int,int> u;
+        queue<pair<TreeNode *,int>> q; // (node,level)
+        q.push({root,0});
 
         // level order traversal
         while(!q.empty())
         {
-            int n=q.size(),rightMostElement=INT_MAX;
-            
-            for(int i=0;i<n;i++)
-            {
-                auto node=q.front();
-                q.pop();
+            auto node=q.front().first;
+            int level=q.front().second;
+            q.pop();
 
-                rightMostElement=node->val;
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }
+            // overwrite any previous values of u[level] with the rightmost value
+            u[level]=node->val;
+            if(node->left) q.push({node->left,level+1});
+            if(node->right) q.push({node->right,level+1});
+        }
 
-            res.push_back(rightMostElement);
+        for(auto it:u)
+        {
+            res.push_back(it.second);
         }
 
         return res;
