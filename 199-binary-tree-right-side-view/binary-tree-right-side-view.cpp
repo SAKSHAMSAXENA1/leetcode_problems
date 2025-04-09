@@ -11,24 +11,32 @@
  */
 class Solution {
 public:
-map<int,int> u; // (level,node)
-void preOrder(TreeNode *root,int level)
-{
-    if(root==NULL) return;
-
-    u[level]=root->val; // overwrite any prev values of u[level]
-
-    preOrder(root->left,level+1);
-    preOrder(root->right,level+1);
-    // right subtree is visited after left subtree which ensures that the rightmost values
-    // always overwrite the previous values of u for their level
-
-}
     vector<int> rightSideView(TreeNode* root) {
-        preOrder(root,0);
         vector<int> res;
-        for(auto it:u)
-        res.push_back(it.second);
+        if(root==NULL) return res;
+        queue<TreeNode *> q;
+        int curLevel=-1;
+        q.push(root);
+
+        // level order traversal
+        while(!q.empty())
+        {
+            curLevel++;
+            int n=q.size(),rightMostElement=INT_MAX;
+            
+            for(int i=0;i<n;i++)
+            {
+                auto node=q.front();
+                q.pop();
+
+                rightMostElement=node->val;
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+            }
+
+            res.push_back(rightMostElement);
+        }
+
         return res;
     }
 };
