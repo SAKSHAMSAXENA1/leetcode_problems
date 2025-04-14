@@ -28,8 +28,6 @@ void preOrder(TreeNode *root,unordered_map<int,vector<int>> &adj, unordered_map<
     }
 }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        if(k==0) return {target->val};
-
         unordered_map<int,vector<int>> adj;
         unordered_map<int,bool> vis;
         //vector<bool> vis(adj.size(), false);
