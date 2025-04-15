@@ -11,47 +11,33 @@
  */
 class Solution {
 public:
-TreeNode * findNode(TreeNode *root,int &start)
-{
-    if(root==NULL) return root; // return NULL
-
-    if(root->val==start) return root; // root is the pointer to start node
-
-    auto l=findNode(root->left,start);
-    if(l!=NULL) return l;
-
-    auto r=findNode(root->right,start);
-    if(r!=NULL) return r;
-
-    // else node is absent from both left and right subtrees
-    return NULL;
-}
 
 void preOrder(TreeNode *root,unordered_map<TreeNode *,TreeNode *> &parent,
-unordered_map<TreeNode *,bool> &vis)
+unordered_map<TreeNode *,bool> &vis,TreeNode * &startNode,int &start)
 {
     //if(root==NULL) return;
 
     vis[root]=false;
+    if(root->val==start) startNode=root;
 
     if(root->left)
     {
         parent[root->left]=root;
-        preOrder(root->left,parent,vis);
+        preOrder(root->left,parent,vis,startNode,start);
     }
 
     if(root->right)
     {
         parent[root->right]=root;
-        preOrder(root->right,parent,vis);
+        preOrder(root->right,parent,vis,startNode,start);
     }
 }
     
     int amountOfTime(TreeNode* root, int start) {
-        auto startNode=findNode(root,start);
+        TreeNode *startNode;
         unordered_map<TreeNode *,TreeNode *> parent;
         unordered_map<TreeNode *,bool> vis;
-        preOrder(root,parent,vis);
+        preOrder(root,parent,vis,startNode,start);
         queue<TreeNode *> q;
         q.push(startNode); // start bfs with startNode
         vis[startNode]=true;
