@@ -19,7 +19,6 @@ int inStart,int inEnd,unordered_map<int,int> &index)
     int preRoot=preorder[preStart];
     int inRootIndex=index[preRoot];
     int cntLeftElements=inRootIndex-inStart;
-    int cntRightELements=inEnd-inRootIndex;
 
     TreeNode* root=new TreeNode(preRoot);
 
