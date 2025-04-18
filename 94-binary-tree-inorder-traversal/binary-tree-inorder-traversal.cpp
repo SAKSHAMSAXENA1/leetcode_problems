@@ -22,7 +22,7 @@ public:
                 inorder.push_back(cur->val); // so visit root
                 cur=cur->right; // now move to root's right
             }
-            else
+            else // set up a temporary link to return back to root before visiting root's left
             {
                 TreeNode* prev=cur->left;
 
@@ -34,9 +34,9 @@ public:
                 if(prev->right==NULL)
                 {
                     prev->right=cur; // create temporary link
-                    cur=cur->left;
+                    cur=cur->left; // link is created, so now visit root's left
                 }
-                else // temporary link already exists from prev->right to cur
+                else // temporary link already exists from prev to cur
                 {
                     prev->right=NULL; // erase that temporary link
                     inorder.push_back(cur->val); // left subtree is visited, so visit root now
