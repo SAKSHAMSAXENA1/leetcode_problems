@@ -11,21 +11,22 @@
  */
 class Solution {
 public:
-// preorder: Rt L R <-> R L Rt (mirror img)
-void mirrorImgOfPreorder(TreeNode* root, TreeNode* &prev)
-{
-    if(root==NULL) return;
-
-    mirrorImgOfPreorder(root->right,prev); // right
-    mirrorImgOfPreorder(root->left,prev); // left
-
-    root->right=prev; // visit root
-    root->left=NULL; // visit root
-
-    prev=root;
-}
     void flatten(TreeNode* root) {
-        TreeNode* prev=NULL;
-        mirrorImgOfPreorder(root,prev);
+        if(root==NULL) return;
+
+        stack<TreeNode*> st;
+        st.push(root);
+
+        while(!st.empty())
+        {
+            auto node=st.top();
+            st.pop();
+
+            if(node->right) st.push(node->right); // right
+            if(node->left) st.push(node->left); // left
+
+            node->right=(st.size()) ? st.top():NULL;
+            node->left=NULL;
+        }
     }
 };
