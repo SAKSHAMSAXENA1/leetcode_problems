@@ -1,7 +1,10 @@
 class Solution {
 public:
+unordered_map<int,string> dp;
     string countAndSay(int n) {
         if(n==1) return "1"; // base case
+
+        if(dp.find(n)!=dp.end()) return dp[n];
 
         string s=countAndSay(n-1);
         string res=""; // res is rle
@@ -19,6 +22,6 @@ public:
             i=j-1;
         }
 
-        return res;
+        return dp[n]=res;
     }
 };
