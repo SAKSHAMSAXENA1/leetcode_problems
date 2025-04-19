@@ -1,12 +1,12 @@
 class Solution {
 public:
     string countAndSay(int n) {
-        unordered_map<int,string> dp;
-        dp[1]="1"; // base case
+        string prev,cur;
+        prev="1"; // base case
 
         for(int k=2;k<=n;k++)
         {
-            string s=dp[k-1];
+            string s=prev;
             string res=""; // res is rle
             int m=s.size();
 
@@ -22,9 +22,10 @@ public:
                 i=j-1;
             }
 
-            dp[k]=res;
+            cur=res;
+            prev=cur;
         }
 
-        return dp[n];
+        return prev;
     }
 };
