@@ -25,8 +25,8 @@ public:
             if(node->right) st.push(node->right); // right
             if(node->left) st.push(node->left); // left
 
-            node->right=(st.size()) ? st.top():NULL;
-            node->left=NULL;
+            node->right=(st.size()) ? st.top():NULL; // visit root
+            node->left=NULL; // visit root
         }
     }
 };
