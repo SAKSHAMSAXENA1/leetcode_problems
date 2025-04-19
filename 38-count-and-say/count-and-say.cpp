@@ -1,12 +1,12 @@
 class Solution {
 public:
-string f(int n,unordered_map<int,string> &dp)
+string f(int i,unordered_map<int,string> &dp)
 {
-    if(n==1) return "1"; // base case
+    if(i==1) return "1"; // base case
 
-    if(dp.find(n)!=dp.end()) return dp[n];
+    if(dp.find(i)!=dp.end()) return dp[i];
 
-    string s=countAndSay(n-1);
+    string s=f(i-1,dp);
     string res=""; // res is rle
     int m=s.size();
 
@@ -22,10 +22,16 @@ string f(int n,unordered_map<int,string> &dp)
         i=j-1;
     }
 
-    return dp[n]=res;
+    return dp[i]=res;
 }
     string countAndSay(int n) {
         unordered_map<int,string> dp;
+        /*dp[1]="1"; // base case
+
+        for(int i=2;i<=n;i++)
+        {
+            
+        }*/
         return f(n,dp);
     }
 };
