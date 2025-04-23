@@ -69,19 +69,21 @@ bool findNodeToDelete(TreeNode* root,int &key)
         return true;
     }
 
-    // search node to delete on left
-    bool left=findNodeToDelete(root->left,key);
-    if(left) return true;
-
+    if(key < root->val)
+    {
+        // search node to delete on left
+        bool left=findNodeToDelete(root->left,key);
+        if(left) return true;
+    }
+    // else
     // search node to delete on right
     bool right=findNodeToDelete(root->right,key);
-    if(right) return true;
 
-    return false;
+    return right;
 }
     TreeNode* deleteNode(TreeNode* root, int key) {
         if(root==NULL) return root;
-        
+
         if(root->val==key) // if root itself is to be deleted
         return adjustChildren(root);
 
