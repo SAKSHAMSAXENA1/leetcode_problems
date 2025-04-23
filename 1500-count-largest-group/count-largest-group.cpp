@@ -1,7 +1,7 @@
 class Solution {
 public:
     int countLargestGroup(int n) {
-        int cnt=0,maxSum=0;
+        int cnt=0,maxSize=0;
         unordered_map<int,int> u;
 
         for(int i=1;i<=n;i++)
@@ -15,17 +15,14 @@ public:
             }
 
             u[sum]++;  
-        }
 
-        for(auto it:u)
-        {
-            if(maxSum < it.second)
+            if(u[sum]>maxSize)
             {
-                cnt=1;
-                maxSum=it.second;
+                maxSize=u[sum]; // update maxSize
+                cnt=1; // reset cnt to 1
             }
-            else if(it.second==maxSum) 
-                cnt++;
+            else if(u[sum]==maxSize)
+            cnt++;
         }
 
         return cnt;
