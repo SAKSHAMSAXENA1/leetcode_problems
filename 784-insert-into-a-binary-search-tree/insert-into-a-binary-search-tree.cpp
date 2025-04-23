@@ -11,33 +11,34 @@
  */
 class Solution {
 public:
-void f(TreeNode* root,int &key)
-{
-    if(key < root->val)
-    {
-        if(root->left) 
-        f(root->left,key); // search key on left side
-        else
-        {
-            root->left=new TreeNode(key); // insert on left as leat node
-            return;
-        }
-    }
-    else // root->val < key
-    {
-        if(root->right)
-        f(root->right,key); // search on right side
-        else
-        {
-            root->right=new TreeNode(key); // insert on right as leaf node
-            return;
-        }
-    }
-}
     TreeNode* insertIntoBST(TreeNode* root, int val) {
         if(root==NULL) return new TreeNode(val);
-        
-        f(root,val);
-        return root;
+
+        TreeNode* copyOfRoot=root;
+        while(true)
+        {
+            if(val < root->val)
+            {
+                if(root->left)
+                root=root->left; // search on left side
+                else 
+                {
+                    root->left=new TreeNode(val); // insert on left as leaf node
+                    break;
+                }
+            }
+            else // root->val < val
+            {
+                if(root->right)
+                root=root->right; // search on right side
+                else
+                {
+                    root->right=new TreeNode(val); // insert on right as leaf node
+                    break;
+                }
+            }
+        }
+
+        return copyOfRoot;
     }
 };
