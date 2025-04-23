@@ -13,8 +13,6 @@ class Solution {
 public:
 void insertNode(TreeNode* root,TreeNode* &key)
 {
-    TreeNode* cur=root;
-
     while(true)
     {
         if(root->val < key->val)
@@ -74,7 +72,7 @@ bool findNodeToDelete(TreeNode* root,int &key)
         // search node to delete on left
         return true;
     }
-    // else
+    // else root->val < key
     // search node to delete on right
     return findNodeToDelete(root->right,key);;
 }
