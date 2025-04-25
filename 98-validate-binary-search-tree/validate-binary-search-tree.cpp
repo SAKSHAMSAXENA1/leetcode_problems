@@ -11,16 +11,23 @@
  */
 class Solution {
 public:
+unordered_map<TreeNode* ,int> dpMinVal,dpMaxVal;
 int minVal(TreeNode* root)
 {
     if(root==NULL) return INT_MAX;
-    return min(root->val,min(minVal(root->left),minVal(root->right)));
+
+    if(dpMinVal.find(root)!=dpMinVal.end()) return dpMinVal[root];
+
+    return dpMinVal[root]=min(root->val,min(minVal(root->left),minVal(root->right)));
 }
 
 int maxVal(TreeNode* root)
 {
     if(root==NULL) return INT_MIN;
-    return max(root->val,max(maxVal(root->left),maxVal(root->right)));
+
+    if(dpMaxVal.find(root)!=dpMaxVal.end()) return dpMaxVal[root];
+
+    return dpMaxVal[root]=max(root->val,max(maxVal(root->left),maxVal(root->right)));
 }
     bool isValidBST(TreeNode* root) {
         if(root==NULL) return true;
