@@ -11,30 +11,15 @@
  */
 class Solution {
 public:
-unordered_map<TreeNode* ,int> dpMinVal,dpMaxVal;
-int minVal(TreeNode* root)
+bool f(TreeNode* root,long left,long right)
 {
-    if(root==NULL) return INT_MAX;
+    if(root==NULL) return true;
 
-    if(dpMinVal.find(root)!=dpMinVal.end()) return dpMinVal[root];
+    if(root->val <= left || right <= root->val) return false;
 
-    return dpMinVal[root]=min(root->val,min(minVal(root->left),minVal(root->right)));
-}
-
-int maxVal(TreeNode* root)
-{
-    if(root==NULL) return INT_MIN;
-
-    if(dpMaxVal.find(root)!=dpMaxVal.end()) return dpMaxVal[root];
-
-    return dpMaxVal[root]=max(root->val,max(maxVal(root->left),maxVal(root->right)));
+    return f(root->left,left,root->val) && f(root->right,root->val,right);
 }
     bool isValidBST(TreeNode* root) {
-        if(root==NULL) return true;
-
-        bool leftSmaller=(root->left) ? maxVal(root->left) < root->val : true;
-        bool rightBigger=(root->right) ? root->val < minVal(root->right) : true;
-
-        return leftSmaller && rightBigger && isValidBST(root->left) && isValidBST(root->right);
+        return f(root,LONG_MIN,LONG_MAX);
     }
 };
