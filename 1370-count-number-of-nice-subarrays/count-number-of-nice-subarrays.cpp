@@ -1,29 +1,28 @@
 class Solution {
 public:
-    int f(vector<int> &nums,int k)
+int f(vector<int> &nums,int k)
+{
+    // no of subarrays having <=k odd elements (CONDN OF THE PROBLEM)
+    int l=0,r=0,n=nums.size(),cntOdd=0,res=0;
+
+    while(r<n)
     {
-        // cnt of subarrays where no of odd numbers<=k
-        if(k<0) return 0;
+        cntOdd+=nums[r]%2; // (acquire)
 
-        int l=0,r=0,n=nums.size(),cnt=0,oddCnt=0;
-
-        while(r<n)
+        while(cntOdd>k) // while condn of the problem is not satisfied, shrink
         {
-            oddCnt+=nums[r]%2; // (acquire)
-
-            while(oddCnt>k) // while desired condn->(oddCnt<=k) is false
-            {
-                oddCnt-=nums[l]%2; // (release)
-                l++; // shrink the window (release)
-            }
-
-            // now oddCnt<=k, so update the cnt of such valid subarrays
-            cnt+=r-l+1;
-            r++; // expand the window (acquire)
+            cntOdd-=nums[l]%2; // (release)
+            l++; // shrink the window (release)
         }
 
-        return cnt;
+        // now the window/subarray has <=k odd elements, i.e.
+        // now the condn of the problem is satisfied, so update the result
+        res+=r-l+1;
+        r++; // expand the window (acquire)
     }
+
+    return res;
+}
     int numberOfSubarrays(vector<int>& nums, int k) {
         return f(nums,k)-f(nums,k-1);
     }
