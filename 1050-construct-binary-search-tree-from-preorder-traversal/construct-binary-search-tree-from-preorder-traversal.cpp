@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-void insertNodeIntoBST(TreeNode* &root,int &key)
+void insertNodeIntoBST(TreeNode* root,int &key)
 {
     if(key < root->val) // key must on left side of root
     {
