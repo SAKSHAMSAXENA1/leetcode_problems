@@ -9,19 +9,55 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+ class BSTIterator{
+    public:
+    stack<TreeNode*> st;
+    bool reverse;
+
+    void pushAll(TreeNode* root)
+    {
+        while(root)
+        {
+            st.push(root);
+            if(reverse==true)
+                root=root->right;
+            else
+                root=root->left;
+        }
+    }
+
+    BSTIterator(TreeNode* root, bool isReverse)
+    {
+        reverse=isReverse;
+        pushAll(root);
+    }
+
+    int next() {
+        TreeNode* topNode=st.top();
+        st.pop();
+
+        if(reverse==true)
+            pushAll(topNode->left);
+        else
+            pushAll(topNode->right);
+
+        return topNode->val;
+    }
+ };
 class Solution {
 public:
-unordered_set<int> u;
     bool findTarget(TreeNode* root, int k) {
-        // inorder traversal of BST is sorted in ascending order
-        if(root==NULL) return false;
+        BSTIterator ascending(root,false),descending(root,true);
+        int i=ascending.next();
+        int j=descending.next(); // ascending.before() or ascending.reverseNext
 
-        if(findTarget(root->left,k)==true) return true; // check for left subtree
+        while(i<j)
+        {
+            if(i+j==k) return true;
+            else if(i+j<k) i=ascending.next();
+            else j=descending.next();
+        }
 
-        int rem=k-root->val;
-        if(u.find(rem)!=u.end()) return true; // check for root
-        u.insert(root->val);
-
-        return findTarget(root->right,k); // check for right subtree
+        return false;
     }
 };
