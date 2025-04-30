@@ -11,33 +11,35 @@
  */
 class Solution {
 public:
-void traverse(TreeNode* root,vector<int> &inorder)
+TreeNode *first=NULL,*middle=NULL,*last=NULL,*prev=NULL;
+void traverse(TreeNode* root)
 {
     if(root==NULL) return;
 
-    traverse(root->left,inorder); // left
+    traverse(root->left); // left
 
-    inorder.push_back(root->val); // root, do business
+    if(prev!=NULL) // root, do business
+    {
+        if(prev->val >= root->val)
+        {
+            if(first==NULL)
+            {
+                first=prev;
+                middle=root;
+            }
+            else last=root;
+        }
+    }
 
-    traverse(root->right,inorder); // right
-}
+    prev=root;
 
-void traverseAndUpdate(TreeNode* root,vector<int> &inorder,int &index)
-{
-    if(root==NULL) return;
-
-    traverseAndUpdate(root->left,inorder,index); // left
-    
-    root->val=inorder[index]; // root, do business
-    index++;
-
-    traverseAndUpdate(root->right,inorder,index); // right
+    traverse(root->right); // right
 }
     void recoverTree(TreeNode* root) {
-        vector<int> inorder;
-        traverse(root,inorder); // store the inorder traversal of original tree
-        sort(inorder.begin(),inorder.end());
-        int index=0;
-        traverseAndUpdate(root,inorder,index);
+        traverse(root);
+        if(last!=NULL) // swapped nodes are not adjacent
+        swap(first->val,last->val);
+        else // swapped nodes are adjacent, as last==NULL
+        swap(first->val,middle->val);
     }
 };
