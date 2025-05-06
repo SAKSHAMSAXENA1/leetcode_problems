@@ -44,8 +44,8 @@ void update(long index,int low,int high,int l,int r)
 
         if(low!=high) // more than 1 node/time slots in node interavl [low high]
         {
-            lazy[2*index+1]=lazy[index]; // lazy propagation of updates/pendingBookings down
-            lazy[2*index+2]=lazy[index]; // to children
+            lazy[2*index+1]+=lazy[index]; // lazy propagation of updates/pendingBookings down
+            lazy[2*index+2]+=lazy[index]; // to children
         }
 
         lazy[index]=0; // no pending bookings now for node interval [low high] 
