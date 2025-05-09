@@ -14,24 +14,16 @@ public:
 void inorder(TreeNode* root,int &sum)
 {
     if(root==NULL) return;
-    inorder(root->left,sum);
+    inorder(root->right,sum); // visit all larger values first (right)
     sum+=root->val;
-    inorder(root->right,sum);
+    root->val=sum; // update root
+    inorder(root->left,sum); // visit all smaller values (left)
 }
 
-void update(TreeNode* root,int &sum)
-{
-    if(root==NULL) return;
-    update(root->left,sum);
-    int cur=root->val;
-    root->val=sum;
-    sum-=cur;
-    update(root->right,sum);
-}
+
     TreeNode* bstToGst(TreeNode* root) {
         int sum=0;
         inorder(root,sum);
-        update(root,sum);
         return root;
     }
 };
