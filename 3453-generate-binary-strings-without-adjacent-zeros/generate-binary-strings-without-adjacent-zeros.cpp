@@ -1,6 +1,6 @@
 class Solution {
 public:
-void f(int index,string &ds,char lastBit,int &n,vector<string> &res)
+void f(int index,string &ds,bool lastBit,int &n,vector<string> &res)
 {
     if(index==n)
     {
@@ -9,20 +9,20 @@ void f(int index,string &ds,char lastBit,int &n,vector<string> &res)
     }
 
     ds.push_back('1'); // you can always put a '1'
-    f(index+1,ds,'1',n,res);
+    f(index+1,ds,true,n,res);
     ds.pop_back();
 
-    if(lastBit=='1') // but you can place a '0' only if lastBit was '1'
+    if(lastBit==true) // but you can place a '0' only if lastBit was '1'
     {
         ds.push_back('0');
-        f(index+1,ds,'0',n,res);
+        f(index+1,ds,false,n,res);
         ds.pop_back();
     }
 }
     vector<string> validStrings(int n) {
         vector<string> res;
         string ds="";
-        f(0,ds,'1',n,res);
+        f(0,ds,true,n,res);
         return res;
     }
 };
