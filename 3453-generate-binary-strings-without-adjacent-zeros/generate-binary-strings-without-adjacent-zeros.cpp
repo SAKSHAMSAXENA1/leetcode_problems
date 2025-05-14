@@ -1,6 +1,6 @@
 class Solution {
 public:
-void f(int index,string ds,char lastBit,int &n,vector<string> &res)
+void f(int index,string &ds,char lastBit,int &n,vector<string> &res)
 {
     if(index==n)
     {
@@ -16,11 +16,13 @@ void f(int index,string ds,char lastBit,int &n,vector<string> &res)
     {
         ds.push_back('0');
         f(index+1,ds,'0',n,res);
+        ds.pop_back();
     }
 }
     vector<string> validStrings(int n) {
         vector<string> res;
-        f(0,"",'1',n,res);
+        string ds="";
+        f(0,ds,'1',n,res);
         return res;
     }
 };
