@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<string> getLongestSubsequence(vector<string>& words, vector<int>& groups) {
-        int n=words.size(),maxLen=1,maxIndex=0;
+        int n=words.size(),maxLen=0,maxIndex=-1;
         vector<int> dp(n,1),hash(n);
         vector<string> res;
 
@@ -15,12 +15,13 @@ public:
                 {
                     dp[i]=dp[j]+1;
                     hash[i]=j;
-                    if(dp[i]>maxLen)
-                    {
-                        maxLen=dp[i];
-                        maxIndex=i;
-                    }
                 }
+            }
+
+            if(dp[i]>maxLen)
+            {
+                maxLen=dp[i];
+                maxIndex=i;
             }
         }
 
