@@ -1,5 +1,5 @@
 class SGTree{
-    vector<int> seg;
+    unordered_map<int,int> seg;
     public:
     void build(int index,int low,int high,vector<int> &arr)
     {
@@ -33,7 +33,6 @@ class SGTree{
     SGTree(vector<int> &arr)
     {
         int n=arr.size();
-        seg.resize(4*n);
         build(0,0,n-1,arr);
     }
 };
