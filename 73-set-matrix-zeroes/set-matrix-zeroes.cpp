@@ -17,7 +17,10 @@ public:
 
        for(int i=0;i<m;i++)
        {
-        if(zeroRows[i]==true) matrix[i]=vector<int>(n,0);
+        if(zeroRows[i]==true) 
+        {
+            for(int j=0;j<n;j++) matrix[i][j]=0;
+        }
        }
 
        for(int j=0;j<n;j++)
