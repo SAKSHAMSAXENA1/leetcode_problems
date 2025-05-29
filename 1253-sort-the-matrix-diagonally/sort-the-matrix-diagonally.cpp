@@ -21,12 +21,12 @@ public:
             {
                 if(j>=i)
                 {
-                    res[i][j]=(pq[j-i].top());
+                    res[i][j]=pq[j-i].top();
                     pq[j-i].pop();
                 }
                 else 
                 {
-                    res[i][j]=(pq[n+i-j-1].top());
+                    res[i][j]=pq[n+i-j-1].top();
                     pq[n+i-j-1].pop();
                 }
             }
