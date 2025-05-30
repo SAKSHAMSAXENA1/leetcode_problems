@@ -29,24 +29,18 @@ public:
 
         q.push(node2);
         int distFromNode2=0;
-        //vis[curNode]=true;
+        vis[node2]=true;
 
         while(!q.empty())
         {
             int curNode=q.front();
             q.pop();
 
-            //if(vis[curNode])
-            //return max(distFromNode1[curNode],distFromNode2);
-
-            vis[curNode]=true;
-
             int adjNode=edges[curNode];
 
             if(adjNode!=-1)
             {
                 if(vis[adjNode]) 
-                //return max(distFromNode1[adjNode],distFromNode2+1);
                 return {max(distFromNode1[adjNode],distFromNode2+1),adjNode};
                 else
                 {
