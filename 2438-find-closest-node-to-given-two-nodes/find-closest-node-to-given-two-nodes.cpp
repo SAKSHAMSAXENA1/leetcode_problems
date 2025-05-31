@@ -1,13 +1,25 @@
 class Solution {
 public:
-void dfs(int node,vector<int> &edges,vector<int> &dist)
+void bfs(int &node,vector<int> &edges,vector<int> &dist)
 {
-    int adjNode=edges[node];
+    queue<int> q;
+    vector<bool> vis(edges.size(),false);
+    q.push(node);
+    vis[node]=true;
 
-    if(adjNode!=-1 && dist[node]+1<dist[adjNode])
+    while(!q.empty())
     {
-        dist[adjNode]=dist[node]+1;
-        dfs(adjNode,edges,dist);
+        int curNode=q.front();
+        q.pop();
+
+        int adjNode=edges[curNode];
+
+        if(adjNode!=-1 && !vis[adjNode])
+        {
+            vis[adjNode]=true;
+            dist[adjNode]=dist[curNode]+1;
+            q.push(adjNode);
+        }
     }
 }
     int closestMeetingNode(vector<int>& edges, int node1, int node2) {
@@ -17,8 +29,8 @@ void dfs(int node,vector<int> &edges,vector<int> &dist)
         distFromNode1[node1]=0;
         distFromNode2[node2]=0;
 
-        dfs(node1,edges,distFromNode1);
-        dfs(node2,edges,distFromNode2);
+        bfs(node1,edges,distFromNode1);
+        bfs(node2,edges,distFromNode2);
 
         for(int i=0;i<n;i++)
         {
