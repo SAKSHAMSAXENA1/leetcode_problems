@@ -3,9 +3,7 @@ public:
 void bfs(int &node,vector<int> &edges,vector<int> &dist)
 {
     queue<int> q;
-    vector<bool> vis(edges.size(),false);
     q.push(node);
-    vis[node]=true;
 
     while(!q.empty())
     {
@@ -14,9 +12,8 @@ void bfs(int &node,vector<int> &edges,vector<int> &dist)
 
         int adjNode=edges[curNode];
 
-        if(adjNode!=-1 && !vis[adjNode])
+        if(adjNode!=-1 && dist[curNode]+1<dist[adjNode])
         {
-            vis[adjNode]=true;
             dist[adjNode]=dist[curNode]+1;
             q.push(adjNode);
         }
