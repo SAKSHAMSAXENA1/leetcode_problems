@@ -5,13 +5,13 @@ bool dfsToZero(int node,vector<int> &timeOfVisByBob,vector<vector<int>> &adj)
     if(node==0) return true;
 
     bool pathLeadsToZero=false;
-    for(auto v: adj[node])
+    for(auto neighbour: adj[node])
     {
-        if(timeOfVisByBob[v]==INT_MAX) // v is not visited
+        if(timeOfVisByBob[neighbour]==INT_MAX) // neighbour not visited by Bob till now
         {
-            timeOfVisByBob[v]=timeOfVisByBob[node]+1;
+            timeOfVisByBob[neighbour]=timeOfVisByBob[node]+1;
 
-            pathLeadsToZero=pathLeadsToZero | dfsToZero(v,timeOfVisByBob,adj);
+            pathLeadsToZero=pathLeadsToZero | dfsToZero(neighbour,timeOfVisByBob,adj);
         }
     }
 
@@ -19,6 +19,34 @@ bool dfsToZero(int node,vector<int> &timeOfVisByBob,vector<vector<int>> &adj)
     timeOfVisByBob[node]=INT_MAX; // this node will not be vis by Bob
 
     return pathLeadsToZero;
+}
+
+void dfs(int node,int pointsTillCurNode,vector<int> &amount,vector<int> &timeOfVisByAlice,
+vector<int> &timeOfVisByBob,vector<vector<int>> &adj,int &maxi)
+{
+    if(timeOfVisByAlice[node] < timeOfVisByBob[node])
+    {
+        pointsTillCurNode+=amount[node];
+    }
+    else if(timeOfVisByAlice[node] == timeOfVisByBob[node])
+    {
+        pointsTillCurNode+=amount[node]/2;
+    }
+
+    bool isLeaf=true;
+
+    for(auto neighbour:adj[node])
+    {
+        if(timeOfVisByAlice[neighbour]==INT_MAX) // neighbour not vis by Alice till now
+        {
+            timeOfVisByAlice[neighbour]=timeOfVisByAlice[node]+1;
+            dfs(neighbour,pointsTillCurNode,amount,timeOfVisByAlice,timeOfVisByBob,adj,maxi);
+            isLeaf=false;
+        }
+    }
+
+    if(isLeaf)
+    maxi=max(maxi,pointsTillCurNode);
 }
     int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
         int n=edges.size()+1,maxi=INT_MIN;
@@ -37,38 +65,7 @@ bool dfsToZero(int node,vector<int> &timeOfVisByBob,vector<vector<int>> &adj)
         queue<int> q;
         vector<int> timeOfVisByAlice(n,INT_MAX),pointsTillNode(n,0);
         timeOfVisByAlice[0]=0;
-        q.push(0);
-
-        while(!q.empty())
-        {
-            int curNode=q.front();
-            q.pop();
-
-            if(timeOfVisByAlice[curNode] < timeOfVisByBob[curNode])
-            {
-                pointsTillNode[curNode]+=amount[curNode];
-            }
-            else if(timeOfVisByAlice[curNode] == timeOfVisByBob[curNode])
-            {
-                pointsTillNode[curNode]+=amount[curNode]/2;
-            }
-
-            bool isLeaf=true;
-
-            for(auto neighbour:adj[curNode])
-            {
-                if(timeOfVisByAlice[neighbour]==INT_MAX) // neighbour not vis till now
-                {
-                    timeOfVisByAlice[neighbour]=timeOfVisByAlice[curNode]+1;
-                    pointsTillNode[neighbour]=pointsTillNode[curNode];
-                    q.push(neighbour);
-                    isLeaf=false;
-                }
-            }
-
-            if(isLeaf)
-            maxi=max(maxi,pointsTillNode[curNode]);
-        }
+        dfs(0,0,amount,timeOfVisByAlice,timeOfVisByBob,adj,maxi);
 
         return maxi;
     }
