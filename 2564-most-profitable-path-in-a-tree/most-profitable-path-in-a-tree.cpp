@@ -2,7 +2,7 @@ class Solution {
 public:
 bool dfsToZero(int node,vector<int> &timeOfVisByBob,vector<vector<int>> &adj)
 {
-    //if(node==0) return true;
+    if(node==0) return true;
 
     bool pathLeadsToZero=false;
     for(auto v: adj[node])
@@ -10,7 +10,6 @@ bool dfsToZero(int node,vector<int> &timeOfVisByBob,vector<vector<int>> &adj)
         if(timeOfVisByBob[v]==INT_MAX) // v is not visited
         {
             timeOfVisByBob[v]=timeOfVisByBob[node]+1;
-            if(v==0) return true;
 
             pathLeadsToZero=pathLeadsToZero | dfsToZero(v,timeOfVisByBob,adj);
         }
