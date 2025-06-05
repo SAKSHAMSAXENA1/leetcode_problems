@@ -36,17 +36,18 @@ public:
     string smallestEquivalentString(string s1, string s2, string baseStr) {
         DisjointSet ds;
         int n=s1.size();
+        string res="";
 
         for(int i=0;i<n;i++)
         {
             ds.unionByLexicographicalOrder(s1[i]-'a',s2[i]-'a');
         }
 
-        for(auto &it:baseStr)
+        for(auto it:baseStr)
         {
-            it=ds.findUPar(it-'a')+'a';
+            res.push_back(ds.findUPar(it-'a')+'a');
         }
 
-        return baseStr;
+        return res;
     }
 };
