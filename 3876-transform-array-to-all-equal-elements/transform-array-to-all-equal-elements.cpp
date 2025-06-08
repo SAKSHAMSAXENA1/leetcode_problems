@@ -18,8 +18,8 @@ bool canMake(vector<int> temp,int &k,int target,int &n)
     bool canMakeEqual(vector<int>& nums, int k) {
         int n=nums.size();
 
-        if(canMake(nums,k,1,n)) return true;
+        if(canMake(nums,k,1,n)) return true; // check for [1 1 1 1 1 1]
 
-        return canMake(nums,k,-1,n);
+        return canMake(nums,k,-1,n); // check for [-1 -1 -1 -1 -1 -1]
     }
 };
