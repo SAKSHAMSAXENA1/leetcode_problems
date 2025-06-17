@@ -38,7 +38,6 @@ public:
                 {
                     parent[node->left]=node;
                     childrenSum[node]+=node->left->val;
-                    nextLevelSum+=node->left->val;
                     q.push(node->left);
                 }
 
@@ -46,9 +45,10 @@ public:
                 {
                     parent[node->right]=node;
                     childrenSum[node]+=node->right->val;
-                    nextLevelSum+=node->right->val;
                     q.push(node->right);
                 }
+
+                nextLevelSum+=childrenSum[node];
             }
 
             curLevelSum=nextLevelSum;
