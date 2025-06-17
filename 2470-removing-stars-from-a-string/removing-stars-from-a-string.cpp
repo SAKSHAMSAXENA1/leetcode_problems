@@ -1,23 +1,14 @@
 class Solution {
 public:
     string removeStars(string s) {
-        stack<char> st;
+        string st; // string also functions like stack -> pop_back=pop,push_back=push
 
         for(auto it:s)
         {
-            if(it=='*') st.pop();
-            else st.push(it);
+            if(it=='*') st.pop_back();
+            else st.push_back(it);
         }
 
-        string res="";
-
-        while(!st.empty())
-        {
-            res.push_back(st.top());
-            st.pop();
-        }
-
-        reverse(res.begin(),res.end());
-        return res;
+        return st;
     }
 };
