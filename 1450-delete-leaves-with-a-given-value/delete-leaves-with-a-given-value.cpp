@@ -16,25 +16,14 @@ bool isLeaf(TreeNode *root)
     return root->left==NULL && root->right==NULL;
 }
 
-void postOrder(TreeNode *root,int &target)
-{
-    if(root->left)
-    postOrder(root->left, target); // left
-
-    if(root->right)
-    postOrder(root->right,target); // right
-
-    // root
-    if(root->left && isLeaf(root->left) && root->left->val==target)
-    root->left=NULL;
-
-    if(root->right && isLeaf(root->right) && root->right->val==target)
-    root->right=NULL;
-
-}
     TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        postOrder(root,target);
-        if(isLeaf(root) && root->val==target) root=NULL;
+        if(root->left)
+        root->left=removeLeafNodes(root->left,target);
+
+        if(root->right)
+        root->right=removeLeafNodes(root->right,target);
+        
+        if(isLeaf(root) && root->val==target) return NULL;
 
         return root;
     }
