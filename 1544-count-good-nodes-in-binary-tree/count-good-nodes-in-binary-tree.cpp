@@ -13,15 +13,15 @@ class Solution {
 public:
 void preorder(TreeNode* root,int maxi,int &cnt)
 {
-    cnt+=(maxi <= (root->val));
+    if(!root) return;
+
+    cnt+=(maxi <= (root->val)); // root
 
     maxi=max(maxi,root->val);
 
-    if(root->left)
-    preorder(root->left,maxi,cnt);
+    preorder(root->left,maxi,cnt); // left
 
-    if(root->right)
-    preorder(root->right,maxi,cnt);
+    preorder(root->right,maxi,cnt); // right
 }
     int goodNodes(TreeNode* root) {
         int cnt=0;
