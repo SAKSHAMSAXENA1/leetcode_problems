@@ -25,6 +25,8 @@ bool isRepeatedKTimes(string &ds,string &s,int &k)
 bool canGenerateSubsequences(string &ds, vector<int> &remCharFreqPerSubsequence, int &maxLen,
 string &res,string &s,int &k)
 {
+    if(ds.size()>maxLen) return false;
+
     if(ds.size()==maxLen)
     {
         if(isRepeatedKTimes(ds,s,k))
