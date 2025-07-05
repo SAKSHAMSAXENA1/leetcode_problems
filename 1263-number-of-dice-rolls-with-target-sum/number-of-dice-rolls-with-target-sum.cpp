@@ -26,7 +26,7 @@ int f(int index,int rem,int &n,int &k,vector<vector<int>> &dp)
         {
             for(int rem=0;rem<=target;rem++)
             {
-                //if(n-index>rem) break;
+                if(n-index>rem) continue;
 
                 int noOfWays=0;
 
