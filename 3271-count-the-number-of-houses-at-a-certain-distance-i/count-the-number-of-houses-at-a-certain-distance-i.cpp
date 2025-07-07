@@ -1,54 +1,50 @@
 class Solution {
 public:
     vector<int> countOfPairs(int n, int x, int y) {
-        vector<int>res;
+        vector<int>res(n,0);
         vector<vector<int>> adj(n+1,vector<int>());
+        vector<vector<int>> dist(n+1,vector<int>(n+1,INT_MAX));
 
         for(int i=1;i<=n;i++)
         {
-            if(i+1<=n) adj[i].push_back(i+1);
-            if(i-1>=1) adj[i].push_back(i-1);
+            dist[i][i]=0;
+            if(i+1<=n)
+            {
+                adj[i].push_back(i+1);
+                dist[i][i+1]=1;
+            }
+            if(i-1>=1)
+            {
+                adj[i].push_back(i-1);
+                dist[i][i-1]=1;
+            }
         }
 
         adj[x].push_back(y);
+        dist[x][y]=(x!=y);
         adj[y].push_back(x);
+        dist[y][x]=(x!=y);
 
-        for(int k=1;k<=n;k++)
+        for(int intermediate=1;intermediate<=n;intermediate++)
         {
-            int pairs=0;
             for(int i=1;i<=n;i++)
             {
-                vector<bool> vis(n+1,false);
-                queue<int> q;
-                q.push(i);
-                vis[i]=true;
-                int curLevel=0;
-
-                while(!q.empty() && curLevel<k)
+                for(int j=1;j<=n;j++)
                 {
-                    int m=q.size();
+                    if(dist[i][intermediate]==INT_MAX || dist[intermediate][j]==INT_MAX)
+                    continue;
 
-                    while(m--)
-                    {
-                        int curNode=q.front();
-                        q.pop();
-
-                        for(auto neighbour:adj[curNode])
-                        {
-                            if(!vis[neighbour])
-                            {
-                                vis[neighbour]=true;
-                                q.push(neighbour);
-                            }
-                        }
-                    }
-
-                    curLevel++;
+                    if(dist[i][intermediate]+dist[intermediate][j]<dist[i][j])
+                    dist[i][j]=dist[i][intermediate]+dist[intermediate][j];
                 }
-
-                pairs+=q.size();
             }
-            res.push_back(pairs);
+        }
+
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+            if(i!=j) 
+            res[dist[i][j]-1]++;
         }
 
         return res;
