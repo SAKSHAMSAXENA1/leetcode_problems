@@ -1,37 +1,41 @@
 class Solution {
 public:
-bool isValid(int &i,int &j,int &n,vector<vector<int>>& grid)
-{
-    return 0<=i && i<n && 0<=j && j<n && grid[i][j]==0;
-}
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        if(grid[0][0]) return -1;
+        
         int n=grid.size();
-        if(grid[0][0]==1 || grid[n-1][n-1]==1) return -1;
+        vector<vector<bool>> vis(n,vector<bool>(n,false));
+        int di[]={-1,-1,0,1,1,1,0,-1},dj[]={0,1,1,1,0,-1,-1,-1};
+        queue<pair<int,int>> q;
+        q.push({0,0});
+        vis[0][0]=true;
+        int curLevel=1;
 
-        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<>> pq;
-        vector<vector<int>> dist(n,vector<int> (n, 1e9));
-        dist[0][0]=0;
-        pq.push({0,{0,0}});
-        int di[]={-1,-1,-1,0,1,1,1,0},dj[]={-1,0,1,1,1,0,-1,-1};
-
-        while(!pq.empty())
+        while(!q.empty())
         {
-            int curDist=pq.top().first,curi=pq.top().second.first,curj=pq.top().second.second;
-            pq.pop();
+            int curLevelElements=q.size();
 
-            for(int k=0;k<8;k++)
+            while(curLevelElements--)
             {
-                int ni=curi+di[k],nj=curj+dj[k];
+                int i=q.front().first,j=q.front().second;
+                q.pop();
+                if(i==n-1 && j==n-1) return curLevel;
 
-                if(isValid(ni,nj,n,grid) && curDist+1<dist[ni][nj])
+                for(int k=0;k<8;k++)
                 {
-                    dist[ni][nj]=curDist+1;
-                    pq.push({dist[ni][nj],{ni,nj}});
+                    int ni=i+di[k],nj=j+dj[k];
+
+                    if(0<=ni && ni<n && 0<=nj && nj<n && !grid[ni][nj] && !vis[ni][nj])
+                    {
+                        vis[ni][nj]=true;
+                        q.push({ni,nj});
+                    }
                 }
             }
+
+            curLevel++;
         }
 
-        if(dist[n-1][n-1]==1e9) return -1; // unreachable
-        return dist[n-1][n-1]+1;
+        return -1;
     }
 };
