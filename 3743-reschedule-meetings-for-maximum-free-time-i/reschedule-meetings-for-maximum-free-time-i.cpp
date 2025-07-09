@@ -13,7 +13,7 @@ public:
 
         // k shifts => k+1 free times will add
 
-        int n=freeTime.size(),l=0,r=0,sum=0,maxSum=0;
+        int n=events+1,l=0,r=0,sum=0,maxSum=0;
 
         while(r<n)
         {
