@@ -9,29 +9,29 @@
  */
 class Solution {
 public:
-void dfs(TreeNode *root,unordered_map<TreeNode*,TreeNode*> &parent)
+void dfs(TreeNode *root,unordered_map<int,TreeNode*> &parent)
 {
     if(root->left)
     {
-        parent[root->left]=root;
+        parent[root->left->val]=root;
         dfs(root->left,parent);
     }
 
     if(root->right)
     {
-        parent[root->right]=root;
+        parent[root->right->val]=root;
         dfs(root->right,parent);
     }
 }
 
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        unordered_map<TreeNode*,TreeNode*> parent;
+        unordered_map<int,TreeNode*> parent;
         dfs(root,parent);
 
-        unordered_set<TreeNode*> vis;    
+        unordered_set<int> vis;    
         queue<TreeNode*> q;
         q.push(target);
-        vis.insert(target);
+        vis.insert(target->val);
         int curLevel=0;
 
         while(!q.empty() && curLevel<k)
@@ -43,22 +43,23 @@ void dfs(TreeNode *root,unordered_map<TreeNode*,TreeNode*> &parent)
                 auto node=q.front();
                 q.pop();
 
-                if(node->left && vis.find(node->left)==vis.end())
+                if(node->left && vis.find(node->left->val)==vis.end())
                 {
                     q.push(node->left);
-                    vis.insert(node->left);
+                    vis.insert(node->left->val);
                 }
 
-                if(node->right && vis.find(node->right)==vis.end())
+                if(node->right && vis.find(node->right->val)==vis.end())
                 {
                     q.push(node->right);
-                    vis.insert(node->right);
+                    vis.insert(node->right->val);
                 }
 
-                if(parent.find(node)!=parent.end() && vis.find(parent[node])==vis.end())
+                if(parent.find(node->val)!=parent.end() && 
+                vis.find(parent[node->val]->val)==vis.end())
                 {
-                    q.push(parent[node]);
-                    vis.insert(parent[node]);
+                    q.push(parent[node->val]);
+                    vis.insert(parent[node->val]->val);
                 }
             }
 
