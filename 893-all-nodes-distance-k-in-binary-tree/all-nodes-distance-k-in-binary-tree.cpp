@@ -9,66 +9,63 @@
  */
 class Solution {
 public:
-void preOrder(TreeNode *root,unordered_map<TreeNode *,TreeNode *> &parent,
-unordered_map<TreeNode *,bool> &vis)
+void dfs(TreeNode *root,unordered_map<TreeNode*,TreeNode*> &parent)
 {
-    if(root==NULL) return;
-
-    vis[root]=false;
     if(root->left)
     {
         parent[root->left]=root;
-        preOrder(root->left,parent,vis);
+        dfs(root->left,parent);
     }
 
     if(root->right)
     {
         parent[root->right]=root;
-        preOrder(root->right,parent,vis);
+        dfs(root->right,parent);
     }
 }
-    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        unordered_map<TreeNode *,TreeNode *> parent;
-        unordered_map<TreeNode *,bool> vis;
-        vector<int> res;
-        preOrder(root,parent,vis);
 
-        queue<TreeNode *> q;
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        unordered_map<TreeNode*,TreeNode*> parent;
+        dfs(root,parent);
+
+        unordered_set<TreeNode*> vis;    
+        queue<TreeNode*> q;
         q.push(target);
-        vis[target]=true;
+        vis.insert(target);
         int curLevel=0;
 
         while(!q.empty() && curLevel<k)
         {
-            int n=q.size();
+            int nodesInCurLevel=q.size();
 
-            for(int i=0;i<n;i++)
+            while(nodesInCurLevel--)
             {
-                auto curNode=q.front();
+                auto node=q.front();
                 q.pop();
 
-                if(curNode->left && !vis[curNode->left])
+                if(node->left && vis.find(node->left)==vis.end())
                 {
-                    q.push(curNode->left);
-                    vis[curNode->left]=true;
+                    q.push(node->left);
+                    vis.insert(node->left);
                 }
 
-                if(curNode->right && !vis[curNode->right])
+                if(node->right && vis.find(node->right)==vis.end())
                 {
-                    q.push(curNode->right);
-                    vis[curNode->right]=true;
+                    q.push(node->right);
+                    vis.insert(node->right);
                 }
 
-                if(parent.find(curNode)!=parent.end() && !vis[parent[curNode]])
+                if(parent.find(node)!=parent.end() && vis.find(parent[node])==vis.end())
                 {
-                    q.push(parent[curNode]);
-                    vis[parent[curNode]]=true;
+                    q.push(parent[node]);
+                    vis.insert(parent[node]);
                 }
             }
 
             curLevel++;
         }
 
+        vector<int> res;
         while(!q.empty())
         {
             res.push_back(q.front()->val);
