@@ -13,20 +13,23 @@ public:
             {
                 if(i==0) colXor[i][j]=matrix[i][j];
                 if(j==0) rowXor[i][j]=matrix[i][j];
-                int x=matrix[i][j];
-                if(i>=1 && j>=1) x=x^gridXor[i-1][j-1];
+                
+                gridXor[i][j]=matrix[i][j];
+                if(i>=1 && j>=1) gridXor[i][j]=gridXor[i][j]^gridXor[i-1][j-1];
+
                 if(i>=1)
                 {
-                    x=x^colXor[i-1][j];
+                    gridXor[i][j]=gridXor[i][j]^colXor[i-1][j];
                     colXor[i][j]=colXor[i-1][j]^matrix[i][j];
                 }
+
                 if(j>=1) 
                 {
-                    x=x^rowXor[i][j-1];
+                    gridXor[i][j]=gridXor[i][j]^rowXor[i][j-1];
                     rowXor[i][j]=rowXor[i][j-1]^matrix[i][j];
                 }
-                gridXor[i][j]=x;
-                xorVal.push_back(x);
+
+                xorVal.push_back(gridXor[i][j]);
             }
         }
 
