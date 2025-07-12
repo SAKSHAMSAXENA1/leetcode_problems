@@ -1,29 +1,33 @@
 class Solution {
 public:
+int f(vector<int> &arr,int idx,int &x)
+{
+    int res=0;
+    for(auto it:arr)
+    {
+        if(abs(it-arr[idx])%x) return -1;
+
+        res+=abs(it-arr[idx])/x;
+    }
+
+    return res;
+}
     int minOperations(vector<vector<int>>& grid, int x) {
-        vector<int> flattened;
-        int n=grid.size(),m=grid[0].size(),res=0;
+        int m=grid.size(),n=grid[0].size();
+        vector<int> arr;
+        for(int i=0;i<m;i++)
+        for(int j=0;j<n;j++)
+        arr.push_back(grid[i][j]);
 
-        // step 1-> flatten
-        for(int i=0;i<n;i++)
-        {
-            for(auto it:grid[i])
-            flattened.push_back(it);
-        }
+        sort(arr.begin(),arr.end());
 
-        // step 2-> sort
-        sort(flattened.begin(),flattened.end());
-        int medianIndex=n*m/2;
-        int commonVal=flattened[medianIndex]; // commonVal is the median element of flattened
+        if((m*n)%2) return f(arr,(m*n)/2,x); // odd no of elements, so 1 median element
 
-        for(auto it:flattened)
-        {
-            if(it%x!=commonVal%x)  // indicates if conversion is not possible
-            return -1;
+        int ans1=f(arr,(m*n)/2-1,x);
+        int ans2=f(arr,(m*n)/2,x);
 
-            res+=abs(commonVal-it)/x;
-        }
-
-        return res;
+        if(ans1==-1) return ans2;
+        else if(ans2==-1) return ans1;
+        else return min(ans1,ans2);
     }
 };
