@@ -21,13 +21,6 @@ int f(vector<int> &arr,int idx,int &x)
 
         sort(arr.begin(),arr.end());
 
-        if((m*n)%2) return f(arr,(m*n)/2,x); // odd no of elements, so 1 median element
-
-        int ans1=f(arr,(m*n)/2-1,x);
-        int ans2=f(arr,(m*n)/2,x);
-
-        if(ans1==-1) return ans2;
-        else if(ans2==-1) return ans1;
-        else return min(ans1,ans2);
+        return f(arr,(m*n)/2,x);
     }
 };
