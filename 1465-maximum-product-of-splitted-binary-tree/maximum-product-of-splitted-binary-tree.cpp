@@ -12,33 +12,36 @@
 #define ull unsigned long long
 class Solution {
 public:
-ull findSum(TreeNode* root,unordered_map<TreeNode*,ull> &u)
+ull findSum(TreeNode* root)
 {
     if(!root) return 0;
 
-    return u[root]=findSum(root->left,u)+findSum(root->right,u)+root->val;
+    return findSum(root->left)+findSum(root->right)+root->val;
 }
 
-void f(TreeNode* root,unordered_map<TreeNode*,ull> &u,ull &maxi,ull &completeTreeSum)
+ull f(TreeNode* root,ull &maxi,ull &completeTreeSum)
 {
+    if(!root) return 0;
+
+    ull leftSum=0,rightSum=0;
     if(root->left)
     {
-        maxi=max(maxi,(completeTreeSum-u[root->left])*u[root->left]);
-        f(root->left,u,maxi,completeTreeSum);
+        leftSum=f(root->left,maxi,completeTreeSum);
+        maxi=max(maxi,(completeTreeSum-leftSum)*leftSum);
     }
 
     if(root->right)
     {
-        maxi=max(maxi,(completeTreeSum-u[root->right])*u[root->right]);
-        f(root->right,u,maxi,completeTreeSum);
+        rightSum=f(root->right,maxi,completeTreeSum);
+        maxi=max(maxi,(completeTreeSum-rightSum)*rightSum);  
     }
+
+    return leftSum+rightSum+root->val;
 }
     int maxProduct(TreeNode* root) {
-        unordered_map<TreeNode*,ull> u;
-        findSum(root,u);
-        ull maxi=0,completeTreeSum=u[root];
+        ull maxi=0,completeTreeSum=findSum(root);
 
-        f(root,u,maxi,completeTreeSum);
+        f(root,maxi,completeTreeSum);
 
         return maxi%((ull)1e9+7);
     }
