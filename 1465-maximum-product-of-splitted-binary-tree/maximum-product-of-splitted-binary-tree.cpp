@@ -24,17 +24,12 @@ ull f(TreeNode* root,ull &maxi,ull &completeTreeSum)
     if(!root) return 0;
 
     ull leftSum=0,rightSum=0;
-    if(root->left)
-    {
-        leftSum=f(root->left,maxi,completeTreeSum);
-        maxi=max(maxi,(completeTreeSum-leftSum)*leftSum);
-    }
 
-    if(root->right)
-    {
-        rightSum=f(root->right,maxi,completeTreeSum);
-        maxi=max(maxi,(completeTreeSum-rightSum)*rightSum);  
-    }
+    leftSum=f(root->left,maxi,completeTreeSum);
+    maxi=max(maxi,(completeTreeSum-leftSum)*leftSum);
+
+    rightSum=f(root->right,maxi,completeTreeSum);
+    maxi=max(maxi,(completeTreeSum-rightSum)*rightSum);  
 
     return leftSum+rightSum+root->val;
 }
