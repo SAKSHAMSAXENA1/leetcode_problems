@@ -1,5 +1,6 @@
 class Solution {
 public:
+/* // Memoization
 bool f(int index,vector<int> &nums,vector<int> &dp,int &n)
 {
     if(index==n-1) return true;
@@ -14,10 +15,25 @@ bool f(int index,vector<int> &nums,vector<int> &dp,int &n)
     }
 
     return dp[index]=false;
-}
+}*/
     bool canJump(vector<int>& nums) {
         int n=nums.size();
-        vector<int> dp(n,-1);
-        return f(0,nums,dp,n);
+        vector<bool> dp(n,false);
+
+        dp[n-1]=true;
+
+        for(int index=n-2;index>=0;index--)
+        {
+            for(int jump=1;jump<=nums[index] && index+jump<n;jump++)
+            {
+                if(dp[index+jump]==true)
+                {
+                    dp[index]=true;
+                    break;
+                }
+            }
+        }
+
+        return dp[0];
     }
 };
