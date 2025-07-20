@@ -1,39 +1,19 @@
 class Solution {
 public:
-/* // Memoization
-bool f(int index,vector<int> &nums,vector<int> &dp,int &n)
-{
-    if(index==n-1) return true;
-
-    if(nums[index]==0) return false;
-
-    if(dp[index]!=-1) return dp[index];
-
-    for(int jump=1;jump<=nums[index] && index+jump<n;jump++)
-    {
-        if(f(index+jump,nums,dp,n)==true) return true;
-    }
-
-    return dp[index]=false;
-}*/
     bool canJump(vector<int>& nums) {
-        int n=nums.size();
-        vector<bool> dp(n,false);
+        int maxReachableIndex=0,n=nums.size();
 
-        dp[n-1]=true;
-
-        for(int index=n-2;index>=0;index--)
+        for(int i=0;i<n;i++)
         {
-            for(int jump=1;jump<=nums[index] && index+jump<n;jump++)
-            {
-                if(dp[index+jump]==true)
-                {
-                    dp[index]=true;
-                    break;
-                }
-            }
+            if(maxReachableIndex<i) // index 'i' is out of my reach
+            return false;
+
+            // else i<=maxReachableIndex => index 'i' is within my reach
+            // so update maxReachableIndex
+            maxReachableIndex=max(maxReachableIndex,i+nums[i]);
         }
 
-        return dp[0];
+        // all indices including 'n-1' were within my reach, so return true
+        return true;
     }
 };
