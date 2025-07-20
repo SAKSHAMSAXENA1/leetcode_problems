@@ -1,7 +1,7 @@
 class Solution {
 public:
     int maximumLength(vector<int>& nums, int k) {
-        int n=nums.size(),maxi=0;
+        int maxi=0;
         vector<vector<int>> dp(k,vector<int>(k,0));
 
         for(auto it:nums)
