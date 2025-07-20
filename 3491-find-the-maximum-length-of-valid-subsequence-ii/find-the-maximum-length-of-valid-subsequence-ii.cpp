@@ -2,15 +2,18 @@ class Solution {
 public:
     int maximumLength(vector<int>& nums, int k) {
         int n=nums.size(),maxi=0;
-        vector<vector<int>> dp(k,vector<int>(n,1));
+        vector<vector<int>> dp(k,vector<int>(k,0));
 
-        for(int i=1;i<n;i++)
+        for(int i=0;i<n;i++)
         {
-            for(int j=0;j<i;j++)
+            int cur=nums[i]%k;
+
+            for(int prev=0;prev<k;prev++)
             {
-                int mod=(nums[j]+nums[i])%k;
-                dp[mod][i]=max(dp[mod][i],dp[mod][j]+1);
-                maxi=max(maxi,dp[mod][i]);
+                // dp[cur][prev]=len of longest valid subsequence ending with mod val=cur,
+                // whose previous element is prev
+                dp[cur][prev]=max(dp[cur][prev],dp[prev][cur]+1);
+                maxi=max(maxi,dp[cur][prev]);
             }
         }
 
