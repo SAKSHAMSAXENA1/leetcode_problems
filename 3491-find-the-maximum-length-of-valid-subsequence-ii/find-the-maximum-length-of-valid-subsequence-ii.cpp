@@ -4,9 +4,9 @@ public:
         int n=nums.size(),maxi=0;
         vector<vector<int>> dp(k,vector<int>(k,0));
 
-        for(int i=0;i<n;i++)
+        for(auto it:nums)
         {
-            int cur=nums[i]%k;
+            int cur=it%k;
 
             for(int prev=0;prev<k;prev++)
             {
