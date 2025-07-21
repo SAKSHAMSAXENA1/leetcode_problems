@@ -1,39 +1,25 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int n=nums.size();
-        vector<bool> vis(n,false);
-        queue<int> q;
-        q.push(0);
-        vis[0]=true;
-        int curLevel=0;
+        int jumps=0,l=0,r=0,n=nums.size();
+        // jumps => no of jumps in which the next range [l..r] is reachable
 
-        while(!q.empty())
+        while(r<n-1)
         {
-            int nodesInCurLevel=q.size();
+            int farthest=0; // farthest index reachable from elements of current range
 
-            while(nodesInCurLevel--)
+            for(int i=l;i<=r;i++)
             {
-                int curIndex=q.front();
-                q.pop();
-
-                if(curIndex==n-1) return curLevel;
-
-                for(int jumps=1;jumps<=nums[curIndex] && curIndex+jumps<n;jumps++)
-                {
-                    int nextIndex=curIndex+jumps;
-
-                    if(!vis[nextIndex])
-                    {
-                        q.push(nextIndex);
-                        vis[nextIndex]=true;
-                    }
-                }
+                farthest=max(farthest,i+nums[i]);
             }
 
-            curLevel++;
+            l=r+1; // starting point of next range
+            r=farthest; // ending point of next range
+            jumps++; // all the elements of next range are reachable in 'jumps' no of jumps
         }
 
-        return -1;
+        // r>=n-1 : ending point of next range covers the index 'n-1'
+        // so return the no of jumps in which the next range is reachable
+        return jumps;
     }
 };
