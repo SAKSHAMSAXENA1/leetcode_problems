@@ -1,43 +1,39 @@
 class Solution {
 public:
-/* // Memoization
-int f(int index,vector<int> &nums,vector<int> &dp,int &n)
-{
-    if(index==n-1) return 0;
-
-    if(dp[index]!=-1) return dp[index];
-
-    int mini=INT_MAX;
-
-    for(int jumps=1;jumps<=nums[index] && index+jumps<n;jumps++)
-    {
-        int nextJumps=f(index+jumps,nums,dp,n);
-
-        if(nextJumps!=INT_MAX)
-        mini=min(mini,1+nextJumps);
-    }
-
-    return dp[index]=mini;
-}
-*/
     int jump(vector<int>& nums) {
         int n=nums.size();
-        vector<int> dp(n,0);
+        vector<bool> vis(n,false);
+        queue<int> q;
+        q.push(0);
+        vis[0]=true;
+        int curLevel=0;
 
-        for(int index=n-2;index>=0;index--)
+        while(!q.empty())
         {
-            int mini=INT_MAX;
+            int nodesInCurLevel=q.size();
 
-            for(int jumps=1;jumps<=nums[index] && index+jumps<n;jumps++)
+            while(nodesInCurLevel--)
             {
-                int nextJumps=dp[index+jumps];
+                int curIndex=q.front();
+                q.pop();
 
-                if(nextJumps!=INT_MAX)
-                mini=min(mini,1+nextJumps);
+                if(curIndex==n-1) return curLevel;
+
+                for(int jumps=1;jumps<=nums[curIndex] && curIndex+jumps<n;jumps++)
+                {
+                    int nextIndex=curIndex+jumps;
+
+                    if(!vis[nextIndex])
+                    {
+                        q.push(nextIndex);
+                        vis[nextIndex]=true;
+                    }
+                }
             }
 
-            dp[index]=mini;
+            curLevel++;
         }
-        return dp[0];
+
+        return -1;
     }
 };
