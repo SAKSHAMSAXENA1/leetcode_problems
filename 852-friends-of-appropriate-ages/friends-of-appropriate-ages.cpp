@@ -1,7 +1,6 @@
-class SegmentTree{
-    public:
+class SegmentTree{ 
     vector<int> seg;
-
+public:
     void build(int index,int low,int high)
     {
         if(low==high) // node interval converges to a single node
@@ -53,10 +52,10 @@ public:
         for(auto it:ages)
         {
             int l=it/2+7+1;
-            if(l>it) continue;
+            if(l<=it) 
             res+=sgt.query(0,0,n-1,l,it,ages)-1; // r=it
         }
 
-        return res;
+        return res; 
     }
 };
