@@ -19,36 +19,11 @@ int binarySearch(vector<int> &nums,int &key,int &n)
 }
     vector<int> solveQueries(vector<int>& nums, vector<int>& queries) {
         map<int,vector<int>> u;
-        unordered_map<int,int> shortestDist;
         vector<int> res;
         int n=nums.size();
 
         for(int i=0;i<n;i++)
         u[nums[i]].push_back(i);
-
-        /*for(auto it:u)
-        {
-            cout<<endl<<it.first<<" : ";
-            for(auto index:it.second)
-            cout<<index<<" ";
-        }*/
-
-        /*for(auto &[el,indices]:u)
-        {
-            int m=indices.size();
-            if(m==1) shortestDist[el]=-1;
-            else
-            {
-                sort(indices.begin(),indices.end());
-                int mini=INT_MAX;
-                for(int i=0;i<m-1;i++)
-                mini=min({mini,indices[i+1]-indices[i],indices[i]+n-indices[i+1]});
-
-                mini=min({mini,indices[m-1]-indices[0],indices[0]+n-indices[m-1]});
-                
-                shortestDist[el]=mini;
-            } 
-        }*/
 
         for(auto index: queries)
         {
