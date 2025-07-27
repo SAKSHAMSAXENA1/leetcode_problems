@@ -18,7 +18,7 @@ int binarySearch(vector<int> &nums,int &key,int &n)
     return -1;
 }
     vector<int> solveQueries(vector<int>& nums, vector<int>& queries) {
-        map<int,vector<int>> u;
+        unordered_map<int,vector<int>> u;
         vector<int> res;
         int n=nums.size();
 
