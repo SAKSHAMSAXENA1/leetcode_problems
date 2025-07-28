@@ -3,13 +3,16 @@ public:
 void f(int index,int orVal,vector<int> &nums,int &n,int &maxi,int &cnt)
 {
     if(index==n)
-    { 
+    {
         if(orVal>maxi)
         {
             maxi=orVal;
-            cnt=1;
+            cnt=1; // reset cnt to 1
         }
-        else if(orVal==maxi) cnt++;
+        else if(orVal==maxi)
+        {
+            cnt++; // increase cnt val
+        }
 
         return;
     }
@@ -21,7 +24,7 @@ void f(int index,int orVal,vector<int> &nums,int &n,int &maxi,int &cnt)
     f(index+1,orVal,nums,n,maxi,cnt);
 }
     int countMaxOrSubsets(vector<int>& nums) {
-        int cnt=0,maxi=0,n=nums.size();
+        int maxi=0,cnt=0,n=nums.size();
         f(0,0,nums,n,maxi,cnt);
         return cnt;
     }
