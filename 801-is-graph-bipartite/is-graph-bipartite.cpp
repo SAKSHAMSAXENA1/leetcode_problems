@@ -1,16 +1,26 @@
 class Solution {
 public:
-bool isComponentBipartite(int node,vector<vector<int>> &graphs,vector<int> &color)
+bool isComponentBipartite(int start,vector<vector<int>> &graphs,vector<int> &color)
 {
-    for(auto neighbour:graphs[node])
+    queue<int> q;
+    q.push(start);
+    color[start]=0;
+
+    while(!q.empty())
     {
-        if(color[neighbour]==-1) // neighbour is not yet colored
+        int curNode=q.front();
+        q.pop();
+
+        for(auto neighbour:graphs[curNode])
         {
-            color[neighbour]=!color[node];
-            if(isComponentBipartite(neighbour,graphs,color)==false)
+            if(color[neighbour]==-1) // neighbour is not yet colored
+            {
+                color[neighbour]=!color[curNode];
+                q.push(neighbour);
+            }
+            else if(color[neighbour]==color[curNode]) 
             return false;
         }
-        else if(color[neighbour]==color[node]) return false;
     }
 
     // no false was returned
@@ -18,13 +28,12 @@ bool isComponentBipartite(int node,vector<vector<int>> &graphs,vector<int> &colo
 }
     bool isBipartite(vector<vector<int>>& graph) {
         int n=graph.size();
-        vector<int> color(n,-1); // initially all node uncolored
+        vector<int> color(n,-1); // initially all nodes uncolored
 
         for(int node=0;node<n;node++)
         {
             if(color[node]==-1) // node not colored yet
             {
-                color[node]=0;
                 if(isComponentBipartite(node,graph,color)==false)
                 return false;
             }
