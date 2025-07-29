@@ -1,5 +1,19 @@
 class Solution {
 public:
+void updateFreqContribution(int freq[],int temp,int change)
+{
+    int j=31; // j=m-1, and m=freq.size()=32, so j=32-1=31
+    while(temp)
+    {
+        int dig=temp%2;
+
+        if(dig==1)
+        freq[j]=freq[j]+change; // change can be +1(acquire) or -1(release)
+
+        temp/=2;
+        j--;
+    }
+}
     vector<int> smallestSubarrays(vector<int>& nums) {
         int r=0,l=0,n=nums.size(),curOr=0;
 
@@ -24,19 +38,7 @@ public:
         while(r<n)
         {
             curOr |=nums[r]; // acquire
-
-            int temp=nums[r],j=m-1;
-
-            while(temp)
-            {
-                int dig=temp%2;
-
-                if(dig==1)
-                freq[j]++; // acquire
-
-                j--;
-                temp/=2;
-            }
+            updateFreqContribution(freq,nums[r],+1); // (+1 : acquire)
 
             // while curOr==maxOr, keep shrinking the window
             while(l<=r && curOr==maxOr[l])
@@ -44,21 +46,9 @@ public:
                 // since curOr==maxOr, update the minLen
                 res[l]=r-l+1;
 
-                int c=nums[l];
-                int j=m-1;
-
                 // remove contribution of nums[l] from freq
                 // (release)
-                while(c)
-                {
-                    int dig=c%2;
-
-                    if(dig==1) // some other nums[i] may also be responsible for set bit
-                    freq[j]--; // (release)
-    
-                    j--;
-                    c/=2;
-                }
+                updateFreqContribution(freq,nums[l],-1); // (-1: release)
                 
                 curOr=0;
                 for(auto it:freq)
