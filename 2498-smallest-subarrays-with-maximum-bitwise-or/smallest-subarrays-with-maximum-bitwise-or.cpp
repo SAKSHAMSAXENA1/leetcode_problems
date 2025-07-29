@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> smallestSubarrays(vector<int>& nums) {
-        int r=0,l=0,n=nums.size(),minLen=n,curOr=0,m=0;
+        int r=0,l=0,n=nums.size(),curOr=0,m=32;
 
         vector<int> maxOr(n,0);
         maxOr[n-1]=nums[n-1];
@@ -9,23 +9,15 @@ public:
         for(int i=n-2;i>=0;i--)
         maxOr[i]=maxOr[i+1] | nums[i];
 
-        for(auto it:maxOr) 
-        cout<<it<<" ";
+        //int totOr=maxOr[0];
 
-        int totOr=maxOr[0];
-
-        /*if(maxOr==0) // all elements of nums are zero
-        return ; // non-empty single element zero*/
-
-        int temp=totOr;
-
-        while(temp)
+        /*while(totOr)
         {
             m++;
-            temp/=2;
-        }
+            totOr=2;
+        }*/
 
-        vector<int> freq(m,0),res(n,0);
+        vector<int> freq(32,0),res(n,0);
 
         while(r<n)
         {
@@ -47,7 +39,7 @@ public:
             // while curOr==maxOr, keep shrinking the window
             while(l<=r && curOr==maxOr[l])
             {
-                minLen=min(minLen,r-l+1); // since curOr==maxOr, update the minLen
+                // since curOr==maxOr, update the minLen
                 res[l]=r-l+1;
 
                 int c=nums[l];
