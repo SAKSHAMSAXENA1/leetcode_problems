@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> smallestSubarrays(vector<int>& nums) {
-        int r=0,l=0,n=nums.size(),curOr=0,m=32;
+        int r=0,l=0,n=nums.size(),curOr=0;
 
         vector<int> maxOr(n,0);
         maxOr[n-1]=nums[n-1];
@@ -9,15 +9,17 @@ public:
         for(int i=n-2;i>=0;i--)
         maxOr[i]=maxOr[i+1] | nums[i];
 
-        //int totOr=maxOr[0];
+        /*int totOr=maxOr[0],m=0;
 
-        /*while(totOr)
+        /while(totOr)
         {
             m++;
             totOr=2;
         }*/
+        int m=32;
 
-        vector<int> freq(32,0),res(n,0);
+        vector<int> res(n,0);
+        int freq[32]={0};
 
         while(r<n)
         {
