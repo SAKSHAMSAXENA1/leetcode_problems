@@ -1,5 +1,5 @@
 #define ll long long
-#define mod (ll)(1e9+7)
+#define mod (int)(1e9+7)
 class Solution {
 public:
     int threeSumMulti(vector<int>& arr, int target) {
