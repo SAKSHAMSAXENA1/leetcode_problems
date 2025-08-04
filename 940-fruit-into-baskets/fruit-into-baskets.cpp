@@ -1,26 +1,32 @@
 class Solution {
 public:
     int totalFruit(vector<int>& fruits) {
-        // largest subarray with at most 2 diff elements
         unordered_map<int,int> u;
-        int l=0,r=0,n=fruits.size(),maxLen=0;
+        int n=fruits.size(),l=0,r=0,res=0;
 
         while(r<n)
         {
-            u[fruits[r]]++; // (acquire)
+            u[fruits[r]]++; // acquire
 
-            if(u.size()>2) //if the subarray has more than two distinct types of elements
+            // while condn of the probm is false, i.e. the window has more than two types 
+            // of fruits/elements
+            while(u.size()>2)
             {
-                u[fruits[l]]--; // (release)
-                if(u[fruits[l]]==0) u.erase(fruits[l]); // (release)      
-                l++; // shrink
+                u[fruits[l]]--; // release
+                if(u[fruits[l]]==0) // the window no longer contains element fruits[l]
+                u.erase(fruits[l]);
+
+                l++; // shrink the window (release)
             }
 
-            // if the subarray has <=2 distinct types of elements, only then update maxLen
-            if(u.size()<=2)
-            maxLen=max(maxLen,r-l+1);
-            r++; // expand
+            // now u.size()<=2, i.e condn of the probm: window (basket) must contain
+            // only a max of two different types of elements (fruits) is satisfied/true
+            // so update the result
+            res=max(res,r-l+1);
+
+            r++; // expand the window (acquire) 
         }
-        return maxLen;
+
+        return res;
     }
 };
