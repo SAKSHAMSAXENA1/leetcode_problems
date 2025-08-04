@@ -2,6 +2,39 @@
 #define mod (int)(1e9+7)
 class Solution {
 public:
+void twoSumMulti(vector<int> &arr,int &target,int &l,int &r,unordered_map<int,int> &u,ll &res)
+{
+    while(l < r)
+    {
+        int curSum=arr[l]+arr[r];
+
+        if(curSum > target) // reduce curSum so that it may become equal to target
+        r--;
+        else if(curSum < target) // increase curSum so that it may become equal to target
+        l++;
+        else // curSum == target
+        {   
+            if(arr[l]!=arr[r])
+            {
+                res=(res+(ll)u[arr[l]]*u[arr[r]])%mod;
+
+                while(l+1<r && arr[l]==arr[l+1])
+                l++;
+
+                while(l<r-1 && arr[r-1]==arr[r])
+                r--;
+
+                l++;
+                r--;
+            }
+            else // arr[l]==arr[r]
+            {
+                res=(res+(ll)u[arr[l]]*(u[arr[l]]-1)/2)%mod;
+                break; // arr[l]==arr[r], l<r so we can't inc nums[l] or dec nums[r]
+            }
+        }
+    }
+}
     int threeSumMulti(vector<int>& arr, int target) {
         sort(arr.begin(),arr.end());
         unordered_map<int,int> u;
@@ -16,36 +49,7 @@ public:
             u[arr[i]]--;
             int l=i+1,r=n-1;
 
-            while(l < r)
-            {
-                int curSum=arr[l]+arr[r];
-
-                if(curSum > remSum) // reduce curSum so that it may become equal to remSum
-                r--;
-                else if(curSum < remSum) // increase curSum so that it may become equal to remSum
-                l++;
-                else // curSum == remSum
-                {   
-                    if(arr[l]!=arr[r])
-                    {
-                        res=(res+(ll)u[arr[l]]*u[arr[r]])%mod;
-
-                        while(l+1<r && arr[l]==arr[l+1])
-                        l++;
-
-                        while(l<r-1 && arr[r-1]==arr[r])
-                        r--;
-
-                        l++;
-                        r--;
-                    }
-                    else // arr[l]==arr[r]
-                    {
-                        res=(res+(ll)u[arr[l]]*(u[arr[l]]-1)/2)%mod;
-                        break; // arr[l]==arr[r], l<r so we can't inc nums[l] or dec nums[r]
-                    }
-                }
-            }
+            twoSumMulti(arr,remSum,l,r,u,res);
         }
 
         return res;
