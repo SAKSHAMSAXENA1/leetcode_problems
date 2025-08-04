@@ -25,16 +25,16 @@ public:
                 else if(curSum < remSum) // increase curSum so that it may become equal to remSum
                 l++;
                 else // curSum == remSum
-                {
-                    while(l+1<r && arr[l]==arr[l+1])
-                    l++;
-
-                    while(l<r-1 && arr[r-1]==arr[r])
-                    r--;
-                    
+                {   
                     if(arr[l]!=arr[r])
                     {
                         res=(res+(ll)u[arr[l]]*u[arr[r]])%mod;
+
+                        while(l+1<r && arr[l]==arr[l+1])
+                        l++;
+
+                        while(l<r-1 && arr[r-1]==arr[r])
+                        r--;
 
                         l++;
                         r--;
