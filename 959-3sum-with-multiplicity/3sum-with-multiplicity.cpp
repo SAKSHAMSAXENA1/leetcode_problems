@@ -26,23 +26,23 @@ public:
                 l++;
                 else // curSum == remSum
                 {
+                    while(l+1<r && arr[l]==arr[l+1])
+                    l++;
+
+                    while(l<r-1 && arr[r-1]==arr[r])
+                    r--;
+                    
                     if(arr[l]!=arr[r])
                     {
                         res=(res+(ll)u[arr[l]]*u[arr[r]])%mod;
 
-                        while(l+1<r && arr[l]==arr[l+1])
-                        l++;
-
-                        while(l<r-1 && arr[r-1]==arr[r])
-                        r--;
-
                         l++;
                         r--;
                     }
-                    else
+                    else // arr[l]==arr[r]
                     {
                         res=(res+(ll)u[arr[l]]*(u[arr[l]]-1)/2)%mod;
-                        break; // arr[l]==arr[r] and l<r now you can't increase l or decrease r
+                        break; // arr[l]==arr[r], l<r so we can't inc nums[l] or dec nums[r]
                     }
                 }
             }
