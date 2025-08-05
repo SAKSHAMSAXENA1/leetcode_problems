@@ -3,22 +3,22 @@ class Solution {
 public:
     long long countSubarrays(vector<int>& nums, int k) {
         ll res=0;
-        int l=0,r=0,n=nums.size(),maxElement=*max_element(nums.begin(),nums.end()),freq=0;
+        int n=nums.size(),maxi=*max_element(nums.begin(),nums.end());
+        int l=0,r=0,cntMaxi=0;
 
         while(r<n)
         {
-            freq+=(nums[r]==maxElement); // (acquire)
+            cntMaxi+=nums[r]==maxi; // acquire
 
-            while(freq==k) // while condn of probm->(freq of maxElement==k) is satisfied
+            // while condn of the probm is true, update res
+            while(cntMaxi==k)
             {
-                res+=n-r; // update result
-
-                // keep shrinking to find the core subarray, where freq of maxElement==k
-                freq-=(nums[l]==maxElement); // (release)
+                res+=n-r;
+                cntMaxi-=nums[l]==maxi; // release
                 l++; // shrink the window (release)
             }
 
-            // now condn of the probm->(freq of maxElement==k) is false, so expand
+            // cntMaxi<k, i.e. condn of probm is not satisfied, so expand window
             r++; // expand the window (acquire)
         }
 
