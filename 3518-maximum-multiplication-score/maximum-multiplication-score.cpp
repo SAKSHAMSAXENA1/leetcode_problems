@@ -1,6 +1,7 @@
 #define ll long long
 class Solution {
 public:
+/* Memoization
 ll f(int i,int j,vector<int> &a,vector<int> &b,int &n,vector<vector<ll>> &dp,
 vector<vector<bool>> &vis)
 {
@@ -25,4 +26,29 @@ vector<vector<bool>> &vis)
         vector<vector<bool>> vis(4,vector<bool>(n,false));
         return f(0,0,a,b,n,dp,vis);
     }
+    */
+
+// Tabulation
+    long long maxScore(vector<int>& a, vector<int>& b) {
+        int n=b.size();
+        vector<vector<ll>> dp(5,vector<ll>(n+1,0));
+
+        for(int i=3;i>=0;i--)
+        {
+            for(int j=n-1;j>=0;j--)
+            {
+                // take
+                ll take=(ll)a[i]*b[j]+dp[i+1][j+1];
+
+                // notTake
+                ll notTake=LLONG_MIN;
+                if(4-i<n-j)
+                notTake=dp[i][j+1];
+
+                dp[i][j]=max(take,notTake);
+            }
+        }
+        return dp[0][0];
+    }
+
 };
