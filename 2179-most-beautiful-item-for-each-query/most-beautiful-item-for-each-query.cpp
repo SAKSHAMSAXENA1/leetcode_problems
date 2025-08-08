@@ -2,11 +2,11 @@ class SegmentTree{
 public:
     vector<int> seg;
 
-    void build(int index,int low,int high,vector<pair<int,int>> &nums)
+    void build(int index,int low,int high,vector<vector<int>> &nums)
     {
         if(low==high) // node interval converges to a range
         {
-            seg[index]=nums[low].second;
+            seg[index]=nums[low][1];
             return;
         }
 
@@ -17,7 +17,7 @@ public:
         seg[index]=max(seg[2*index+1],seg[2*index+2]);
     }
 
-    SegmentTree(int &n,vector<pair<int,int>> &nums)
+    SegmentTree(int &n,vector<vector<int>> &nums)
     {
         seg.resize(4*n);
         build(0,0,n-1,nums);
@@ -50,17 +50,15 @@ public:
     vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
         int n=items.size();
         vector<int> res,prices;
-        vector<pair<int,int>> sortedItems;
         for(auto it:items)
         {
             prices.push_back(it[0]);
-            sortedItems.push_back({it[0],it[1]});
         }
 
         sort(prices.begin(),prices.end());
-        sort(sortedItems.begin(),sortedItems.end());
+        sort(items.begin(),items.end());
 
-        SegmentTree sgt(n,sortedItems);
+        SegmentTree sgt(n,items);
 
         for(auto it:queries)
         {
