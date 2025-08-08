@@ -3,18 +3,20 @@ public:
     vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
         int n=items.size();
         vector<int> res,prices,prefixMax(n);
+        vector<pair<int,int>> sortedItems;
         for(auto it:items)
         {
             prices.push_back(it[0]);
+            sortedItems.push_back({it[0],it[1]});
         }
 
         sort(prices.begin(),prices.end());
-        sort(items.begin(),items.end());
+        sort(sortedItems.begin(),sortedItems.end());
 
-        prefixMax[0]=items[0][1];
+        prefixMax[0]=sortedItems[0].second;
 
         for(int i=1;i<n;i++)
-        prefixMax[i]=max(prefixMax[i-1],items[i][1]);
+        prefixMax[i]=max(prefixMax[i-1],sortedItems[i].second);
 
         for(auto it:queries)
         {
