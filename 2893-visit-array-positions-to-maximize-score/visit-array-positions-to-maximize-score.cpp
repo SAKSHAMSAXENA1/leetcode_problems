@@ -29,23 +29,25 @@ ll f(int i,int prevParity,vector<int> &nums,int &x,int &n,vector<vector<ll>> &dp
 // Tabulation
 long long maxScore(vector<int>& nums, int x) {
         int n=nums.size();
-        vector<vector<ll>> dp(n+1,vector<ll>(2,0));
+        vector<ll> prev(2,0),cur(2,0);
 
         for(int i=n-1;i>=0;i--)
         {
             for(int prevParity=1;prevParity>=0;prevParity--)
             {
                 int curParity=nums[i]%2;
-                ll take=(ll)nums[i]-(i>0 && curParity!=prevParity)*x+dp[i+1][curParity];
+                ll take=(ll)nums[i]-(i>0 && curParity!=prevParity)*x+prev[curParity];
 
                 ll notTake=LLONG_MIN;
 
                 if(i>0)
-                notTake=dp[i+1][prevParity];
+                notTake=prev[prevParity];
 
-                dp[i][prevParity]=max(take,notTake);
+                cur[prevParity]=max(take,notTake);
             }
+
+            prev=cur;
         }
-        return dp[0][0];
+        return prev[0];
     }
 };
