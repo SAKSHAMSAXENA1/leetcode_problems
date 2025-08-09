@@ -1,6 +1,6 @@
 class Solution {
 public:
-int upperBound(vector<pair<int,int>> &nums,int &n,int &key)
+int upperBound(vector<vector<int>> &nums,int &n,int &key)
 {
     int l=0,h=n-1,res=n;
 
@@ -8,7 +8,7 @@ int upperBound(vector<pair<int,int>> &nums,int &n,int &key)
     {
         int mid=(l+h)/2;
 
-        if(key < nums[mid].first)
+        if(key < nums[mid][0])
         {
             res=mid; // one possible ans is index 'mid'
             h=mid-1; // reduce h in order to find first element which is > key
@@ -21,22 +21,17 @@ int upperBound(vector<pair<int,int>> &nums,int &n,int &key)
     vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
         int n=items.size();
         vector<int> res,prefixMax(n);
-        vector<pair<int,int>> sortedItems;
-        for(auto it:items)
-        {
-            sortedItems.push_back({it[0],it[1]});
-        }
 
-        sort(sortedItems.begin(),sortedItems.end());
+        sort(items.begin(),items.end());
 
-        prefixMax[0]=sortedItems[0].second;
+        prefixMax[0]=items[0][1];
 
         for(int i=1;i<n;i++)
-        prefixMax[i]=max(prefixMax[i-1],sortedItems[i].second);
+        prefixMax[i]=max(prefixMax[i-1],items[i][1]);
 
         for(auto it:queries)
         {
-            int ub=upperBound(sortedItems,n,it);
+            int ub=upperBound(items,n,it);
             int queryRes=0;
 
             if(ub!=0) // cost of atleast 1 item is lesser than equal to it
