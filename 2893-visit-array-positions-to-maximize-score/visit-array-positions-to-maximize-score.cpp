@@ -29,7 +29,7 @@ ll f(int i,int prevParity,vector<int> &nums,int &x,int &n,vector<vector<ll>> &dp
 // Tabulation
 long long maxScore(vector<int>& nums, int x) {
         int n=nums.size();
-        vector<ll> prev(2,0),cur(2,0);
+        ll prev[2]={0},cur[2]={0};
 
         for(int i=n-1;i>=0;i--)
         {
@@ -46,8 +46,10 @@ long long maxScore(vector<int>& nums, int x) {
                 cur[prevParity]=max(take,notTake);
             }
 
-            prev=cur;
+            prev[0]=cur[0];
+            prev[1]=cur[1];
         }
+        
         return prev[0];
     }
 };
