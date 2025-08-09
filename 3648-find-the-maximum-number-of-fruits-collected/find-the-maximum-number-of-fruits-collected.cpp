@@ -1,6 +1,6 @@
 class Solution {
 public:
-int f(int startI,int startJ,vector<vector<int>> &fruits,int &n,int factor[],int di[],int dj[],
+int f(int startI,int startJ,vector<vector<int>> &fruits,int &n,int di[],int dj[],
 bool startedFromTopRight)
 {
     queue<pair<int,pair<int,int>>> q;
@@ -22,9 +22,9 @@ bool startedFromTopRight)
             int remMoves;
             
             if(startedFromTopRight)
-            remMoves=(n-1-ni)*factor[0]+(n-1-nj)*factor[1];
+            remMoves=n-1-ni;
             else
-            remMoves=(n-1-ni)*(!factor[0])+(n-1-nj)*(!factor[1]);
+            remMoves=n-1-nj;
 
             if(0<=ni && ni<n && 0<=nj && nj<n && ((n-1-ni)+(n-1-nj))<=2*remMoves)
             {
@@ -41,7 +41,6 @@ bool startedFromTopRight)
 }
     int maxCollectedFruits(vector<vector<int>>& fruits) {
         int res=0,n=fruits.size();
-        int factor[]={1,0};
         int d1[]={1,1,1},d2[]={-1,0,1};
 
         for(int i=0;i<n;i++)
@@ -50,6 +49,6 @@ bool startedFromTopRight)
             fruits[i][i]=0;
         }
 
-        return res+f(0,n-1,fruits,n,factor,d1,d2,true)+f(n-1,0,fruits,n,factor,d2,d1,false); 
+        return res+f(0,n-1,fruits,n,d1,d2,true)+f(n-1,0,fruits,n,d2,d1,false); 
     }
 };
