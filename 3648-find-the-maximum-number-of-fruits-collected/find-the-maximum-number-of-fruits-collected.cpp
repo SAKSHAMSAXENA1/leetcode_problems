@@ -13,7 +13,7 @@ int f(int startI,int startJ,vector<vector<int>> &fruits,int &n,int factor[],int 
 
         if(curDist<dist[i][j]) continue;
 
-        if(i==n-1 && j==n-1) return dist[i][j];
+        if(i==n-1 && j==n-1) break;
 
         for(int k=0;k<3;k++)
         {
@@ -31,7 +31,7 @@ int f(int startI,int startJ,vector<vector<int>> &fruits,int &n,int factor[],int 
         }
     }
 
-    return -1;
+    return dist[n-1][n-1];
 }
     int maxCollectedFruits(vector<vector<int>>& fruits) {
         int res=0,n=fruits.size();
