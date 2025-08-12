@@ -62,13 +62,13 @@ ll f(int i,ll rem,int &x,ll &largestBase,vector<vector<ll>> &dp)
             {
                 int cur=pow(i,x);
 
-                ll take=0;
+                int take=0;
                 if(cur <= rem)
                 take=dp[i+1][rem-cur];
 
-                ll notTake=dp[i+1][rem];
+                int notTake=dp[i+1][rem];
 
-                dp[i][rem]=(take+notTake)%mod;
+                dp[i][rem]=((ll)take+notTake)%mod;
             }
         } 
 
