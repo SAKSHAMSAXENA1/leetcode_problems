@@ -21,6 +21,8 @@ int findLargestBase(ll &n,int &x)
     return res;
 }
 
+/* 
+// Memoition
 ll f(int i,ll rem,int &x,ll &largestBase,vector<vector<ll>> &dp)
 {
     if(rem==0) return 1;
@@ -44,5 +46,33 @@ ll f(int i,ll rem,int &x,ll &largestBase,vector<vector<ll>> &dp)
         ll largestBase=findLargestBase(N,x);
         vector<vector<ll>> dp(largestBase+1,vector<ll>(n+1,-1));
         return f(1,n,x,largestBase,dp);
+    }
+*/
+
+// Tabulation
+    int numberOfWays(int n, int x) {
+        ll N=n;
+        ll largestBase=findLargestBase(N,x);
+        vector<vector<ll>> dp(largestBase+2,vector<ll>(n+1,0));
+
+        for(int i=0;i<=largestBase+1;i++) dp[i][0]=1; // for rem=0, value=1
+
+        for(int i=largestBase;i>=1;i--)
+        {
+            for(int rem=1;rem<=n;rem++)
+            {
+                ll cur=pow(i,x);
+
+                ll take=0;
+                if(cur <= rem)
+                take=dp[i+1][rem-cur];
+
+                ll notTake=dp[i+1][rem];
+
+                dp[i][rem]=(take+notTake)%mod;
+            }
+        } 
+
+        return dp[1][n];
     }
 };
