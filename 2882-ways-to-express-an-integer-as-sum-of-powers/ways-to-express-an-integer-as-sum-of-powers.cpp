@@ -1,16 +1,16 @@
 #define ll long long
-#define mod (ll)(1e9+7)
+#define mod (int)(1e9+7)
 class Solution {
 public:
-int findLargestBase(ll &n,int &x)
+int findLargestBase(int &n,int &x)
 {
-    ll l=0,h=n,res=0;
+    int l=0,h=n,res=0;
 
     while(l<=h)
     {
         ll mid=(l+h)/2;
 
-        if(pow(mid,x) <= n)
+        if(pow(mid,x) <= (ll)n)
         {
             res=mid;
             l=mid+1;
@@ -51,9 +51,8 @@ ll f(int i,ll rem,int &x,ll &largestBase,vector<vector<ll>> &dp)
 
 // Tabulation
     int numberOfWays(int n, int x) {
-        ll N=n;
-        ll largestBase=findLargestBase(N,x);
-        vector<vector<ll>> dp(largestBase+2,vector<ll>(n+1,0));
+        int largestBase=findLargestBase(n,x);
+        vector<vector<int>> dp(largestBase+2,vector<int>(n+1,0));
 
         for(int i=0;i<=largestBase+1;i++) dp[i][0]=1; // for rem=0, value=1
 
@@ -61,7 +60,7 @@ ll f(int i,ll rem,int &x,ll &largestBase,vector<vector<ll>> &dp)
         {
             for(int rem=1;rem<=n;rem++)
             {
-                ll cur=pow(i,x);
+                int cur=pow(i,x);
 
                 ll take=0;
                 if(cur <= rem)
