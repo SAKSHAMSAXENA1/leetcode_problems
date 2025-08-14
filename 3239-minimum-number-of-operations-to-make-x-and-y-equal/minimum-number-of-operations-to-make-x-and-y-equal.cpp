@@ -1,11 +1,11 @@
 class Solution {
 public:
     int minimumOperationsToMakeEqual(int x, int y) {
-        unordered_set<int> vis;
+        bool vis[int(1e7)]={false};
         int curLevel=0;
         queue<int> q;
         q.push(x);
-        vis.insert(x);
+        vis[x]=true;
 
         while(!q.empty())
         {
@@ -18,38 +18,41 @@ public:
 
                 if(curx==y) return curLevel;
 
-                if(curx%11==0)
+                if(y < curx)
                 {
-                    int nx=curx/11;
-                    if(vis.find(nx)==vis.end())
+                    if(curx%11==0)
                     {
-                        q.push(nx);
-                        vis.insert(nx);
+                        int nx=curx/11;
+                        if(!vis[nx])
+                        {
+                            q.push(nx);
+                            vis[nx]=true;
+                        }
                     }
-                }
 
-                if(curx%5==0)
-                {
-                    int nx=curx/5;
-                    if(vis.find(nx)==vis.end())
+                    if(curx%5==0)
                     {
-                        q.push(nx);
-                        vis.insert(nx);
+                        int nx=curx/5;
+                        if(!vis[nx])
+                        {
+                            q.push(nx);
+                            vis[nx]=true;
+                        }
                     }
-                }
 
-                int nxDec=curx-1;
-                if(vis.find(nxDec)==vis.end())
-                {
-                    q.push(nxDec);
-                    vis.insert(nxDec);
+                    int nxDec=curx-1;
+                    if(!vis[nxDec])
+                    {
+                        q.push(nxDec);
+                        vis[nxDec]=true;
+                    }
                 }
 
                 int nxInc=curx+1;
-                if(vis.find(nxInc)==vis.end())
+                if(!vis[nxInc])
                 {
                     q.push(nxInc);
-                    vis.insert(nxInc);
+                    vis[nxInc]=true;
                 }
             }
 
