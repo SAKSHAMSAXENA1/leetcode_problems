@@ -29,10 +29,20 @@ int maxSumOfFirstArray(vector<int> &nums1,vector<int> &nums2,int &n)
     }
 
     
-    int sum1=0;
-    for(int i=0;i<n;i++)
+    int i=0,sum1=0;
+    for(;i<maxL;i++)
     {
-        sum1+=(maxL<=i && i<=maxR) ? nums2[i] : nums1[i];
+        sum1+=nums1[i];
+    }
+
+    for(;i<=maxR;i++)
+    {
+        sum1+=nums2[i];
+    }
+
+    for(;i<n;i++)
+    {
+        sum1+=nums1[i];
     }
 
     return sum1;
