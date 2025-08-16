@@ -30,26 +30,23 @@ int maxSumOfFirstArray(vector<int> &nums1,vector<int> &nums2,int &n)
         }
     }
 
-    int i=0,sum1=0,sum2=0;
+    int i=0,sum1=0;
     for(;i<maxL;i++)
     {
         sum1+=nums1[i];
-        sum2+=nums2[i];
     }
 
     for(;i<=maxR;i++)
     {
         sum1+=nums2[i];
-        sum2+=nums1[i];
     }
 
     for(;i<n;i++)
     {
         sum1+=nums1[i];
-        sum2+=nums2[i];
     }
 
-    return max(sum1,sum2);
+    return sum1;
 }
     int maximumsSplicedArray(vector<int>& nums1, vector<int>& nums2) {
         int n=nums1.size();
