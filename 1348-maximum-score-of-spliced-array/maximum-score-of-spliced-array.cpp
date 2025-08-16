@@ -9,14 +9,13 @@ int maxSumOfFirstArray(vector<int> &nums1,vector<int> &nums2,int &n)
 
     int sum=0,maxi=0,maxL=n,maxR=-1,left=0;
 
+    // kadane's algo
     for(int i=0;i<n;i++)
     {
         sum+=diff[i];
 
         if(sum > maxi)
         {
-            // right=i;
-            // maxR=right;
             maxL=left;
             maxR=i;
             maxi=sum;
@@ -26,24 +25,14 @@ int maxSumOfFirstArray(vector<int> &nums1,vector<int> &nums2,int &n)
         {
             sum=0;
             left=i+1;
-            // right=i+1;
         }
     }
 
-    int i=0,sum1=0;
-    for(;i<maxL;i++)
+    
+    int sum1=0;
+    for(int i=0;i<n;i++)
     {
-        sum1+=nums1[i];
-    }
-
-    for(;i<=maxR;i++)
-    {
-        sum1+=nums2[i];
-    }
-
-    for(;i<n;i++)
-    {
-        sum1+=nums1[i];
+        sum1+=(maxL<=i && i<=maxR) ? nums2[i] : nums1[i];
     }
 
     return sum1;
