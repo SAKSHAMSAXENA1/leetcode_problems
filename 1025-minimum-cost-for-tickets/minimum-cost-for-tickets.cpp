@@ -19,6 +19,7 @@ int upperBound(vector<int> &a,int &n,int &key)
 
     return res;
 }
+/*
 // Memoization
 int f(int index,vector<int> &days,vector<int> &costs,int &n,vector<int> &dp)
 {
@@ -39,6 +40,28 @@ int f(int index,vector<int> &days,vector<int> &costs,int &n,vector<int> &dp)
     int mincostTickets(vector<int>& days, vector<int>& costs) {
         int n=days.size();
         vector<int> dp(n,-1);
+
         return f(0,days,costs,n,dp);
+    }*/
+
+// Tabulation
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        int n=days.size();
+        vector<int> dp(n+1,0);
+
+        for(int index=n-1;index>=0;index--)
+        {
+            int minCost=INT_MAX;
+            for(int i=0;i<3;i++)
+            {
+                int lastDayCovered=days[index]+passesDuration[i]-1;
+                int nextDayIndex=upperBound(days,n,lastDayCovered);
+                minCost=min(minCost,costs[i]+dp[nextDayIndex]);
+            }
+
+            dp[index]=minCost;
+        }
+
+        return dp[0];
     }
 };
