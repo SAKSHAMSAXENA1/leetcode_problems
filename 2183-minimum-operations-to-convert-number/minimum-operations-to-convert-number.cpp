@@ -2,9 +2,9 @@ class Solution {
 public:
     int minimumOperations(vector<int>& nums, int start, int goal) {
         queue<int> q;
-        bool vis[1001]={false};
+        unordered_set<int> vis;
         q.push(start);
-        vis[start]=true;
+        vis.insert(start);
         int curLevel=0;
 
         while(!q.empty())
@@ -23,9 +23,9 @@ public:
                     int next=cur+it;
                     if(0<=next && next<=1000)
                     {
-                        if(!vis[next])
+                        if(vis.find(next)==vis.end())
                         {
-                            vis[next]=true;
+                            vis.insert(next);
                             q.push(next);
                         }
                     }
@@ -34,9 +34,9 @@ public:
                     next=cur-it;
                     if(0<=next && next<=1000)
                     {
-                        if(!vis[next])
+                        if(vis.find(next)==vis.end())
                         {
-                            vis[next]=true;
+                            vis.insert(next);
                             q.push(next);
                         }
                     }
@@ -45,9 +45,9 @@ public:
                     next=cur ^ it;
                     if(0<=next && next<=1000)
                     {
-                        if(!vis[next])
+                        if(vis.find(next)==vis.end())
                         {
-                            vis[next]=true;
+                            vis.insert(next);
                             q.push(next);
                         }
                     }
