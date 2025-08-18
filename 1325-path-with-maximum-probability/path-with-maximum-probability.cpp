@@ -21,14 +21,17 @@ public:
             auto [curDist,node]=pq.top();
             pq.pop();
 
+            if(curDist < dist[node]) // optimization to bypass redundant processing
+            continue;
+
             for(auto it:adj[node])
             {
                 auto [neighbour,wt]=it;
-                // double distToNeighbour=curDist * wt;
+                double newDistToNeighbour=curDist * wt;
                 
-                if(curDist * wt > dist[neighbour])
+                if(newDistToNeighbour > dist[neighbour])
                 {
-                    dist[neighbour]=curDist * wt;
+                    dist[neighbour]=newDistToNeighbour;
                     pq.push({dist[neighbour],neighbour});
                 }
             }
