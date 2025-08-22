@@ -2,10 +2,8 @@ class Solution {
 public:
     bool canReach(string s, int minJump, int maxJump) {
         int n=s.size(),largestJ=0;
-        vector<bool> vis(n,false);
         queue<int> q;
         q.push(0);
-        vis[0]=true;
 
         while(!q.empty())
         {
@@ -19,10 +17,9 @@ public:
             int end=min(cur+maxJump,n-1);
             for(int j=start;j<=end;j++)
             {
-                if(s[j]=='0' && !vis[j])
+                if(s[j]=='0')
                 {
                     q.push(j);
-                    vis[j]=true;
                 }
             }
 
