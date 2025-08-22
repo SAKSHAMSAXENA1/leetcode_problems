@@ -1,7 +1,7 @@
 class Solution {
 public:
     bool canReach(string s, int minJump, int maxJump) {
-        int n=s.size(),largestJ=-1;
+        int n=s.size(),largestJ=0;
         vector<bool> vis(n,false);
         queue<int> q;
         q.push(0);
@@ -14,11 +14,7 @@ public:
 
             if(cur==n-1) return true;
 
-            int start;
-            if(largestJ==-1)
-                start=cur+minJump;
-            else
-                start=max(cur+minJump,largestJ+1);
+            int start=max(cur+minJump,largestJ+1);
 
             int end=min(cur+maxJump,n-1);
             for(int j=start;j<=end;j++)
