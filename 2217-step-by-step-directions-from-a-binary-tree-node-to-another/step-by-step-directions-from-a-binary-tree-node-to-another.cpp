@@ -32,13 +32,13 @@ int &destValue,TreeNode* &start,TreeNode* &dest,int &n)
     }
 }
 
-void dfs(TreeNode *root,unordered_map<int,TreeNode*> &parent,vector<bool> &vis,TreeNode* &dest,
+bool dfs(TreeNode *root,unordered_map<int,TreeNode*> &parent,vector<bool> &vis,TreeNode* &dest,
 string &ds,string &res)
 {
     if(root==dest)
     {
         res=ds;
-        return;
+        return true;
     }
 
     vis[root->val]=true;
@@ -46,23 +46,25 @@ string &ds,string &res)
     if(root->left && !vis[root->left->val])
     {
         ds.push_back('L');
-        dfs(root->left,parent,vis,dest,ds,res);
+        if(dfs(root->left,parent,vis,dest,ds,res)) return true;
         ds.pop_back();
     }
 
     if(root->right && !vis[root->right->val])
     {
         ds.push_back('R');
-        dfs(root->right,parent,vis,dest,ds,res);
+        if(dfs(root->right,parent,vis,dest,ds,res)) return true;
         ds.pop_back();
     }
 
     if(parent.find(root->val)!=parent.end() && !vis[parent[root->val]->val])
     {
         ds.push_back('U');
-        dfs(parent[root->val],parent,vis,dest,ds,res);
+        if(dfs(parent[root->val],parent,vis,dest,ds,res)) return true;
         ds.pop_back();
     }
+
+    return false;
 }
 
     string getDirections(TreeNode* root, int startValue, int destValue) {
