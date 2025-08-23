@@ -11,28 +11,35 @@
  */
 class Solution {
 public:
-void preOrder(TreeNode* root, unordered_map<int,TreeNode*> &parent,int &startValue,
-int &destValue,TreeNode* &start,TreeNode* &dest,int &n)
+void dfs(TreeNode *root,int &n)
+{
+    n++;
+
+    if(root->left) dfs(root->left,n);
+
+    if(root->right) dfs(root->right,n);
+}
+
+void preOrder(TreeNode* root, vector<TreeNode*> &parent,int &startValue,int &destValue,
+TreeNode* &start,TreeNode* &dest)
 {
     if(root->val==startValue) start=root; // root
     else if(root->val==destValue) dest=root;
 
-    n++;
-
     if(root->left) // left
     {
         parent[root->left->val]=root;
-        preOrder(root->left,parent,startValue,destValue,start,dest,n);
+        preOrder(root->left,parent,startValue,destValue,start,dest);
     }
 
     if(root->right) // right
     {
         parent[root->right->val]=root;
-        preOrder(root->right,parent,startValue,destValue,start,dest,n);
+        preOrder(root->right,parent,startValue,destValue,start,dest);
     }
 }
 
-bool dfs(TreeNode *root,unordered_map<int,TreeNode*> &parent,vector<bool> &vis,TreeNode* &dest,
+bool findPath(TreeNode *root,vector<TreeNode*> &parent,vector<bool> &vis,TreeNode* &dest,
 string &ds,string &res)
 {
     if(root==dest)
@@ -46,21 +53,21 @@ string &ds,string &res)
     if(root->left && !vis[root->left->val])
     {
         ds.push_back('L');
-        if(dfs(root->left,parent,vis,dest,ds,res)) return true;
+        if(findPath(root->left,parent,vis,dest,ds,res)) return true;
         ds.pop_back();
     }
 
     if(root->right && !vis[root->right->val])
     {
         ds.push_back('R');
-        if(dfs(root->right,parent,vis,dest,ds,res)) return true;
+        if(findPath(root->right,parent,vis,dest,ds,res)) return true;
         ds.pop_back();
     }
 
-    if(parent.find(root->val)!=parent.end() && !vis[parent[root->val]->val])
+    if(parent[root->val]!=NULL && !vis[parent[root->val]->val])
     {
         ds.push_back('U');
-        if(dfs(parent[root->val],parent,vis,dest,ds,res)) return true;
+        if(findPath(parent[root->val],parent,vis,dest,ds,res)) return true;
         ds.pop_back();
     }
 
@@ -69,13 +76,14 @@ string &ds,string &res)
 
     string getDirections(TreeNode* root, int startValue, int destValue) {
         int n=0;
+        dfs(root,n);
+        vector<TreeNode*> parent(n+1,NULL);
         TreeNode *start,*dest;
-        unordered_map<int,TreeNode*> parent;
-        preOrder(root,parent,startValue,destValue,start,dest,n);
+        preOrder(root,parent,startValue,destValue,start,dest);
         vector<bool> vis(n+1,false);
         string ds="",res="";
 
-        dfs(start,parent,vis,dest,ds,res);
+        findPath(start,parent,vis,dest,ds,res);
         
         return res;
     }
