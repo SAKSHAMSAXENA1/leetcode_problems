@@ -41,8 +41,7 @@ unordered_map<int,int> taskToUser;
     int execTop() {
         if(st.size()==0) return -1;
 
-        auto it=st.rbegin();
-        int execTask=it->second;
+        int execTask=st.rbegin()->second;
         int userId=taskToUser[execTask];
         auto execTaskAddr=taskAddr[execTask];
         taskAddr.erase(execTask);
