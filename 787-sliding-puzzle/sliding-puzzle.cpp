@@ -1,20 +1,18 @@
 class Solution {
 public:
-bool isSolved(vector<vector<int>> &board,int &m,int &n)
+bool isSolved(vector<vector<int>> &board)
 {
-    int N=m*n;
-    for(int i=0;i<m;i++)
+    for(int i=0;i<2;i++)
     {
-        for(int j=0;j<n;j++)
+        for(int j=0;j<3;j++)
         {
-            if(board[i][j] != (i*n+j+1)%N) return false;
+            if(board[i][j] != (i*3+j+1)%6) return false;
         }
     }
 
     return true;
 }
     int slidingPuzzle(vector<vector<int>>& board) {
-        int m=board.size(),n=board[0].size();
         int di[4]={-1,0,1,0},dj[4]={0,1,0,-1};
         set<vector<vector<int>>> vis;
         queue<vector<vector<int>>> q;
@@ -30,11 +28,11 @@ bool isSolved(vector<vector<int>> &board,int &m,int &n)
                 auto cur=q.front();
                 q.pop();
 
-                if(isSolved(cur,m,n)) return curLevel;
+                if(isSolved(cur)) return curLevel;
 
-                for(int i=0;i<m;i++)
+                for(int i=0;i<2;i++)
                 {
-                    for(int j=0;j<n;j++)
+                    for(int j=0;j<3;j++)
                     {
                         if(cur[i][j]!=0) continue;
                         // else cur[i][j]==0
@@ -43,7 +41,7 @@ bool isSolved(vector<vector<int>> &board,int &m,int &n)
                         {
                             int ni=i+di[k],nj=j+dj[k];
 
-                            if(0<=ni && ni<m && 0<=nj && nj<n)
+                            if(0<=ni && ni<2 && 0<=nj && nj<3)
                             {
                                 swap(cur[i][j],cur[ni][nj]); // do
 
