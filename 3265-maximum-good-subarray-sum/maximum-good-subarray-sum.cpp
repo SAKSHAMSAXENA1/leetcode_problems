@@ -9,11 +9,9 @@ public:
         prefixSum[0]=nums[0];
         mp[nums[0]]=0;
 
-        for(int i=1;i<n;i++)
-        prefixSum[i]=prefixSum[i-1]+nums[i];
-
         for(int j=1;j<n;j++)
         {
+            prefixSum[j]=prefixSum[j-1]+nums[j];
             int a=nums[j]+k,b=nums[j]-k;
 
             if(mp.find(a)!=mp.end())
