@@ -4,10 +4,10 @@ public:
     long long maximumSubarraySum(vector<int>& nums, int k) {
         int n=nums.size();
         ll maxi=LLONG_MIN;
-        unordered_map<int,ll> numToMinPreviousPrefixSum;
+        unordered_map<int,ll> mp;
         vector<ll> prefixSum(n);
         prefixSum[0]=nums[0];
-        numToMinPreviousPrefixSum[nums[0]]=0;
+        mp[nums[0]]=0;
 
         for(int i=1;i<n;i++)
         prefixSum[i]=prefixSum[i-1]+nums[i];
@@ -16,21 +16,21 @@ public:
         {
             int a=nums[j]+k,b=nums[j]-k;
 
-            if(numToMinPreviousPrefixSum.find(a)!=numToMinPreviousPrefixSum.end())
+            if(mp.find(a)!=mp.end())
             {
-                maxi=max(maxi,prefixSum[j] - numToMinPreviousPrefixSum[a]);
+                maxi=max(maxi,prefixSum[j] - mp[a]);
             }
 
-            if(numToMinPreviousPrefixSum.find(b)!=numToMinPreviousPrefixSum.end())
+            if(mp.find(b)!=mp.end())
             {
-                maxi=max(maxi,prefixSum[j] - numToMinPreviousPrefixSum[b]);
+                maxi=max(maxi,prefixSum[j] - mp[b]);
             }
 
-            if(numToMinPreviousPrefixSum.find(nums[j])==numToMinPreviousPrefixSum.end())
-            numToMinPreviousPrefixSum[nums[j]]=prefixSum[j-1];
+            if(mp.find(nums[j])==mp.end())
+            mp[nums[j]]=prefixSum[j-1];
             else
-            numToMinPreviousPrefixSum[nums[j]]=
-            min(numToMinPreviousPrefixSum[nums[j]],prefixSum[j-1]); // min(existing val,cur val)
+            mp[nums[j]]=
+            min(mp[nums[j]],prefixSum[j-1]); // min(existing val,cur val)
         }
 
         if(maxi==LLONG_MIN) return 0;
