@@ -4,21 +4,26 @@ public:
     long long minimumOperations(vector<int>& nums, vector<int>& target) {
         ll res=0;
         int n=nums.size();
+        vector<int> diff(n,0);
 
-        for(int i=n-1;i>=0;i--)
+        for(int i=0;i<n;i++)
+        diff[i]=target[i]-nums[i];
+
+        int prev=0;
+        for(int i=0;i<n;i++)
         {
-            int curDiff=target[i]-nums[i]; // diff[i]
-            int offset=curDiff;
-            if(i>0)  
+            int cur=diff[i];
+
+            if((prev<0 && 0<cur) || (cur<0 && 0<prev)) // sign change
             {
-                int prevDiff=target[i-1]-nums[i-1]; // diff[i-1]
-                offset=offset-prevDiff; // offset from prev element
+                res+=abs(cur); // move from level 0 directly to cur level
+            }
+            else if(abs(cur) > abs(prev)) // both cur and prev of the same sign/no sign change
+            {
+                res+=abs(cur-prev);
             }
 
-            if((offset<0 && curDiff>0) || (curDiff<0 && offset>0)) // offset to restore, ignore
-            continue;
-
-            res+=(ll)min(abs(curDiff),abs(offset));
+            prev=cur;
         }
 
         return res;
