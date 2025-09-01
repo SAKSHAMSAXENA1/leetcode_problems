@@ -4,15 +4,11 @@ public:
     long long minimumOperations(vector<int>& nums, vector<int>& target) {
         ll res=0;
         int n=nums.size();
-        vector<int> diff(n,0);
-
-        for(int i=0;i<n;i++)
-        diff[i]=target[i]-nums[i];
 
         int prev=0;
         for(int i=0;i<n;i++)
         {
-            int cur=diff[i];
+            int cur=target[i]-nums[i];
 
             if((prev<0 && 0<cur) || (cur<0 && 0<prev)) // sign change
             {
