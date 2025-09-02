@@ -1,7 +1,7 @@
 class Solution {
 public:
-void dfs(int node,int parent,int curTime,vector<int> &adj,vector<bool> &vis,
-vector<bool> &pathVis,vector<int> &time,int &res)
+void dfs(int node,int curTime,vector<int> &adj,vector<bool> &vis, vector<bool> &pathVis,
+vector<int> &time,int &res)
 {
     vis[node]=true;
     pathVis[node]=true;
@@ -13,7 +13,7 @@ vector<bool> &pathVis,vector<int> &time,int &res)
     {
         if(!vis[neighbour])
         {
-            dfs(neighbour,node,curTime+1,adj,vis,pathVis,time,res);
+            dfs(neighbour,curTime+1,adj,vis,pathVis,time,res);
         }
         else if(pathVis[neighbour])
         res=max(res,abs(curTime-time[neighbour])+1);
@@ -37,7 +37,7 @@ vector<bool> &pathVis,vector<int> &time,int &res)
         {
             if(!vis[i])
             {
-                dfs(i,-1,0,adj,vis,pathVis,time,res);
+                dfs(i,0,adj,vis,pathVis,time,res);
             }
         }
 
