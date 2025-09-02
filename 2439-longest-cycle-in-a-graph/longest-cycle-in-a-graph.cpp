@@ -16,7 +16,7 @@ vector<int> &time,int &res)
             dfs(neighbour,curTime+1,adj,vis,pathVis,time,res);
         }
         else if(pathVis[neighbour])
-        res=max(res,abs(curTime-time[neighbour])+1);
+        res=max(res,curTime-time[neighbour]+1);
     }
 
     pathVis[node]=false;
