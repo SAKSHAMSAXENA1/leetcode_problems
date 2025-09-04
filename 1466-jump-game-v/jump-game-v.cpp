@@ -11,13 +11,6 @@ int f(int i,vector<int> &pge,vector<int> &nge,vector<int> &dp)
 
     maxi=max(maxi,f(nbr,pge,nge,dp));
    }
-   /*if(pge[i] < i)
-   prev=f(pge[i],arr,pge,nge);
-   
-   if(i < nge[i])
-   next=f(nge[i],arr,pge,nge));
-
-   return 1+max(prev,next);*/
 
    return dp[i]=1+maxi;
 }
@@ -51,7 +44,6 @@ int f(int i,vector<int> &pge,vector<int> &nge,vector<int> &dp)
         maxi=max(maxi,f(i,pge,nge,dp));
      }
      
-
      return maxi;
     }
 };
