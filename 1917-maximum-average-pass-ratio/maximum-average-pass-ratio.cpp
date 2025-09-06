@@ -1,6 +1,6 @@
 class Solution {
 public:
-double calcGain(int n,int d)
+double calcGain(int &n,int &d)
 {
     return (n+1.0)/(d+1.0)-(n*1.0)/d;
 }
