@@ -1,6 +1,6 @@
 class Solution {
 public:
-// Memoization
+
 int ub(vector<vector<int>> &offers,int &curEnd,int &m)
 {
     int l=0,h=m-1,res=m;
@@ -20,6 +20,8 @@ int ub(vector<vector<int>> &offers,int &curEnd,int &m)
     return res;
 }
 
+/*
+// Memoization
 int f(int index,vector<vector<int>> &offers,int &m,vector<int> &dp)
 {
     if(index==m) return 0;
@@ -39,5 +41,25 @@ int f(int index,vector<vector<int>> &offers,int &m,vector<int> &dp)
         sort(offers.begin(),offers.end());
 
         return f(0,offers,m,dp);
+    }*/
+
+    // Tabulation
+    int maximizeTheProfit(int n, vector<vector<int>>& offers) {
+        int m=offers.size();
+        vector<int> dp(m+1,0);
+        sort(offers.begin(),offers.end());
+
+        for(int index=m-1;index>=0;index--)
+        {
+            int nextIndex=ub(offers,offers[index][1],m);
+            int take=offers[index][2]+dp[nextIndex];
+
+            int notTake=dp[index+1];
+
+            dp[index]=max(take,notTake);
+        }
+
+        return dp[0];
     }
+
 };
