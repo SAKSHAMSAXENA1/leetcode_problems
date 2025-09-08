@@ -12,13 +12,13 @@ bool hasZero(int num)
     return false;
 }
     vector<int> getNoZeroIntegers(int n) {
-        int a=n/2,b=n-a;
-
-        while(hasZero(a) || hasZero(b))
+        for(int a=1;a<n;a++)
         {
-            a++;b--;
+            int b=n-a;
+
+            if(!hasZero(a) && !hasZero(b)) return {a,b};
         }
 
-        return {a,b};
+        return {};
     }
 };
