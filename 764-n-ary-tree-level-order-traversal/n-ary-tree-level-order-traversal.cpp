@@ -22,7 +22,7 @@ class Solution {
 public:
     vector<vector<int>> levelOrder(Node* root) {
         if(root==NULL) return {};
-        
+
         vector<vector<int>> res;
         queue<Node*> q;
         q.push(root);
@@ -30,22 +30,20 @@ public:
         while(!q.empty())
         {
             int levelSize=q.size();
-            vector<int> temp;
+            res.push_back({});
 
             while(levelSize--)
             {
                 auto cur=q.front();
                 q.pop();
 
-                temp.push_back(cur->val);
+                res.back().push_back(cur->val);
 
                 for(auto nbr: cur->children)
                 {
                     q.push(nbr);
                 }
             }
-
-            res.push_back(temp);
         }
 
         return res;
