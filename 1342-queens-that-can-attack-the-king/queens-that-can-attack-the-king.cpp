@@ -1,129 +1,88 @@
 class Solution {
 public:
-bool checkInSameRow(int i,int jq,int jk,vector<vector<bool>> &grid)
+void checkInSameRow(int &ik,int &jk,vector<vector<bool>> &grid,vector<vector<int>> &res,int &n)
 {
-    bool canAttack=true;
-    if(jq < jk)
-    {
-        for(int j=jq+1;j<jk;j++)
+    for(int j=jk-1;j>=0;j--)
+        if(grid[ik][j])
         {
-            if(grid[i][j]==true)
-            {
-                canAttack=false;
-                break;
-            }
+            res.push_back({ik,j});
+            break;
         }
-    }
-    else // jk < jq
-    {
-        for(int j=jq-1;j>jk;j--)
-        {
-            if(grid[i][j]==true)
-            {
-                canAttack=false;
-                break;
-            }
-        }
-    }
 
-    return canAttack;
+        for(int j=jk+1;j<n;j++)
+        if(grid[ik][j])
+        {
+            res.push_back({ik,j});
+            break;
+        }
 }
 
-bool checkInSameCol(int iq,int j,int ik,vector<vector<bool>> &grid)
+void checkInSameCol(int &ik,int &jk,vector<vector<bool>> &grid,vector<vector<int>> &res,int &n)
 {
-    bool canAttack=true;
-    if(iq < ik)
-    {
-        for(int i=iq+1;i<ik;i++)
+    for(int i=ik-1;i>=0;i--)
+        if(grid[i][jk])
         {
-            if(grid[i][j]==true)
-            {
-                canAttack=false;
-                break;
-            }
+            res.push_back({i,jk});
+            break;
         }
-    }
-    else // ik < iq
-    {
-        for(int i=iq-1;i>ik;i--)
-        {
-            if(grid[i][j]==true)
-            {
-                canAttack=false;
-                break;
-            }
-        }
-    }
 
-    return canAttack;
+        for(int i=ik+1;i<n;i++)
+        if(grid[i][jk])
+        {
+            res.push_back({i,jk});
+            break;
+        }
 }
 
-bool checkInSameDiagonal(int iq,int jq,int ik,int jk,vector<vector<bool>> &grid)
+void checkInSameDiagonal(int &ik,int &jk,vector<vector<bool>> &grid,vector<vector<int>> &res,int &n)
 {
-    bool canAttack=true;
-    int rel=iq-jq;
-    if(iq-jq==ik-jk)
+    int i=ik+1,j=jk+1;
+    while(i<n && j<n)
     {
-        if(iq < ik) // move south-east
+        if(grid[i][j])
         {
-            for(int i=iq+1;i<ik;i++)
-            {
-                int j=i-rel;
-                if(grid[i][j])
-                {
-                    canAttack=false;
-                    break;
-                }
-            }
-        }
-        else // move north-west
-        {
-            for(int i=iq-1;i>ik;i--)
-            {
-                int j=i-rel;
-                if(grid[i][j])
-                {
-                    canAttack=false;
-                    break;
-                }
-            }
+            res.push_back({i,j});
+            break;
         }
 
-        return canAttack;
-    }
-    
-    rel=iq+jq;
-    if(iq+jq==ik+jk)
-    {
-        if(iq < ik) // move south-west
-        {
-            for(int i=iq+1;i<ik;i++)
-            {
-                int j=rel-i;
-                if(grid[i][j])
-                {
-                    canAttack=false;
-                    break;
-                }
-            }
-        }
-        else // move north-east
-        {
-            for(int i=iq-1;i>ik;i--)
-            {
-                int j=rel-i;
-                if(grid[i][j])
-                {
-                    canAttack=false;
-                    break;
-                }
-            }
-        }
-
-        return canAttack;
+        i++;j++;
     }
 
-    return false;
+    i=ik-1;j=jk-1;
+    while(i>=0 && j>=0)
+    {
+        if(grid[i][j])
+        {
+            res.push_back({i,j});
+            break;
+        }
+
+        i--;j--;
+    }
+
+    i=ik+1;j=jk-1;
+    while(i<n && j>=0)
+    {
+        if(grid[i][j])
+        {
+            res.push_back({i,j});
+            break;
+        }
+
+        i++;j--;
+    }
+
+    i=ik-1;j=jk+1;
+    while(i>=0 && j<n)
+    {
+        if(grid[i][j])
+        {
+            res.push_back({i,j});
+            break;
+        }
+
+        i--;j++;
+    }
 }
     vector<vector<int>> queensAttacktheKing(vector<vector<int>>& queens, vector<int>& king) {
         int n=8;
@@ -137,18 +96,10 @@ bool checkInSameDiagonal(int iq,int jq,int ik,int jk,vector<vector<bool>> &grid)
         }
 
         int ik=king[0],jk=king[1];
-        for(auto it:queens)
-        {
-            int iq=it[0],jq=it[1];
 
-            if(ik==iq && checkInSameRow(iq,jq,jk,grid))
-                res.push_back({iq,jq});
-            else if(jk==jq && checkInSameCol(iq,jq,ik,grid))
-                res.push_back({iq,jq});
-            else if(checkInSameDiagonal(iq,jq,ik,jk,grid))
-                res.push_back({iq,jq});
-            
-        }
+        checkInSameCol(ik,jk,grid,res,n);
+        checkInSameRow(ik,jk,grid,res,n);
+        checkInSameDiagonal(ik,jk,grid,res,n);
 
         return res;
     }
