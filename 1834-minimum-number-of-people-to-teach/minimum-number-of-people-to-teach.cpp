@@ -1,8 +1,8 @@
 class Solution {
 public:
     int minimumTeachings(int n, vector<vector<int>>& languages, vector<vector<int>>& friendships) {
-        unordered_map<int,unordered_set<int>> userToLang;
         int m=languages.size(),res=INT_MAX;
+        vector<unordered_set<int>> userToLang(m+1);
 
         for(int i=0;i<m;i++)
         {
@@ -35,8 +35,6 @@ public:
                     if(userToLang[v].find(lang)==userToLang[v].end())
                     teach[v]=true;
                 }
-
-                //if(userToLang[u].find(lang)==userToLang[u].end()) // u doesn't know lang
             }
 
             int cnt=0;
@@ -46,8 +44,6 @@ public:
             res=min(res,cnt);
         }
 
-
-        
         return res; 
     }
 };
