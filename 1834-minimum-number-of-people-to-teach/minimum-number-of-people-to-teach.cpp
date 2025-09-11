@@ -2,12 +2,12 @@ class Solution {
 public:
     int minimumTeachings(int n, vector<vector<int>>& languages, vector<vector<int>>& friendships) {
         int m=languages.size(),res=INT_MAX;
-        vector<unordered_set<int>> userToLang(m+1);
+        vector<vector<bool>> userToLang(m+1,vector<bool>(n+1,false));
 
         for(int i=0;i<m;i++)
         {
             for(auto it:languages[i])
-            userToLang[i+1].insert(it);
+            userToLang[i+1][it]=true;
         }
 
         for(int lang=1;lang<=n;lang++)
@@ -18,9 +18,9 @@ public:
                 int u=it[0],v=it[1];
                 bool canTalk=false;
 
-                for(auto commonLang: userToLang[u])
+                for(int commonLang=1;commonLang<=n;commonLang++)
                 {
-                    if(userToLang[v].find(commonLang)!=userToLang[v].end())
+                    if(userToLang[v][commonLang] && userToLang[u][commonLang])
                     {
                         canTalk=true;
                         break;
@@ -29,10 +29,10 @@ public:
 
                 if(!canTalk)
                 {
-                    if(userToLang[u].find(lang)==userToLang[u].end())
+                    if(userToLang[u][lang]==false)
                     teach[u]=true;
 
-                    if(userToLang[v].find(lang)==userToLang[v].end())
+                    if(userToLang[v][lang]==false)
                     teach[v]=true;
                 }
             }
