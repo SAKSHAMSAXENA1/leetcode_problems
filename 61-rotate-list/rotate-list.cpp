@@ -24,7 +24,7 @@ int getSize(ListNode *head)
 }
     ListNode* rotateRight(ListNode* head, int k) {
      if(!head) return head;
-     
+
      int n=getSize(head);
 
      k%=n;
@@ -41,11 +41,10 @@ int getSize(ListNode *head)
         cur=cur->next;
      }
 
-     ListNode *newHead =  last->next; // = cur
+     ListNode *newHead = cur;
      last->next = NULL;
 
      ListNode *prev = NULL;
-     //cur = newHead;
 
      while(cur)
      {
