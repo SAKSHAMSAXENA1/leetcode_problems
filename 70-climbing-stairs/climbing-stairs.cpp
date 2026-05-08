@@ -9,16 +9,17 @@ int f(int i,vector<int> &dp)
     return dp[i] =  f(i-1,dp) + f(i-2,dp);
 }
     int climbStairs(int n) {
-        vector<int> dp(n+1,-1);
+        if(n<=2) return n;
 
-        for(int i = 0;i <=min(2,n);i++)
-        dp[i]=i;
+        int prev1=2,prev2=1,cur=0;
 
         for(int i=3;i<=n;i++)
         {
-            dp[i] =  dp[i-1] + dp[i-2];
+            cur =  prev1 + prev2;
+            prev2 = prev1;
+            prev1 = cur;
         }
 
-        return dp[n];
+        return prev1;
     }
 };
