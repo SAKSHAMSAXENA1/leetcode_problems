@@ -21,9 +21,27 @@ int f(int i,vector<int> &nums,int &target,int &n, vector<int> &dp)
 }
     int maximumJumps(vector<int>& nums, int target) {
         int n = nums.size();
-        vector<int> dp(n,-1);
+        vector<int> dp(n,INT_MIN);
 
-        int res = f(0,nums,target,n,dp);
+        dp[n-1] = 0; // base case
+
+        for(int i = n-2; i>=0 ;i--)
+        {
+            int res = INT_MIN;
+            for(int j=i+1;j<n;j++)
+            {
+                int temp = INT_MIN;
+                if(abs(nums[j]-nums[i]) <= target)
+                temp = dp[j];
+
+                if(temp != INT_MIN)
+                res = max(res, 1 + temp);
+            }
+
+            dp[i] = res;
+        }
+
+        int res = dp[0];
 
         return res == INT_MIN ? -1 : res;
     }
