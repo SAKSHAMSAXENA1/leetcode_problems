@@ -56,12 +56,11 @@ public:
 
                         if(x==0) continue;
 
-                        cout<<x<<" : ";
                         int mx=x;
 
                         int s=i-x,e=i+x;
 
-                        for(int row=s;row<=e;row++)
+                        for(int row=max(s,0);row<=min(e,m-1);row++)
                             {
                                 if(row<0 || row>=m) continue;
                                 
@@ -73,11 +72,7 @@ public:
                                 if(r<l) continue;
                                 int temp = sgt[row].query(0,0,n-1,l,r);
                                 mx = max(mx,temp);
-                                //cout<<row<<" ["<<l<<","<<r<<"] "<<temp<<" , "<<endl;
                             }
-
-                        //cout<<mx<<endl;
-                        //cout<<endl;
 
                         res+= mx==x;
                     }
