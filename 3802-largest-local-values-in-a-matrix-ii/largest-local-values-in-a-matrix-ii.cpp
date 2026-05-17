@@ -66,9 +66,8 @@ public:
                                 l=max(l,0);
                                 int r = j+x - (row==s || row==e);
                                 r=min(r,n-1);
-                                
-                                int temp = sgt[row].query(0,0,n-1,l,r);
-                                mx = max(mx,temp);
+
+                                mx = max(mx,sgt[row].query(0,0,n-1,l,r));
                             }
 
                         res+= mx==x;
