@@ -62,14 +62,11 @@ public:
 
                         for(int row=max(s,0);row<=min(e,m-1);row++)
                             {
-                                if(row<0 || row>=m) continue;
-                                
                                 int l = j-x + (row==s || row==e);
                                 l=max(l,0);
                                 int r = j+x - (row==s || row==e);
                                 r=min(r,n-1);
-
-                                if(r<l) continue;
+                                
                                 int temp = sgt[row].query(0,0,n-1,l,r);
                                 mx = max(mx,temp);
                             }
