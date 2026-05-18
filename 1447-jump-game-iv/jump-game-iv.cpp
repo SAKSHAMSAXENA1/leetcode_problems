@@ -1,57 +1,59 @@
 class Solution {
 public:
     int minJumps(vector<int>& arr) {
-        int n=arr.size();
-        int di[2]={-1,1};
-        unordered_map<int,vector<int>> indices;
-        vector<bool> vis(n,false);
+        int dNode[2]={-1,1};
+        unordered_map<int,vector<int>> adj;
+        int n = arr.size();
 
         for(int i=0;i<n;i++)
-        indices[arr[i]].push_back(i);
-
+        adj[arr[i]].push_back(i);
+        
+        vector<bool> vis(n,false);
         queue<int> q;
         q.push(0);
         vis[0]=true;
-        int curLevel=0;
+        int curLevel = 0;
 
-        // bfs
         while(!q.empty())
         {
-            int levelSize=q.size();
+            int levelSize = q.size();
 
             while(levelSize--)
             {
-                int cur=q.front();
+                int curNode = q.front();
                 q.pop();
 
-                if(cur==n-1) return curLevel;
+                if(curNode==n-1) return curLevel;
 
-                for(int k=0;k<2;k++)
+                for(int k = 0; k < 2;k++)
                 {
-                    int ni=cur+di[k];
+                    int nextNode = curNode + dNode[k];
 
-                    if(0<=ni && ni<n && !vis[ni])
+                    if(0<=nextNode && nextNode<n && !vis[nextNode])
                     {
-                        q.push(ni);
-                        vis[ni]=true;
+                        q.push(nextNode);
+                        vis[nextNode] = true;
                     }
                 }
-
-                for(auto ni: indices[arr[cur]])
+                
+                if(adj.find(arr[curNode]) != adj.end())
                 {
-                    if(!vis[ni])
+                    for(auto &nextNode : adj[arr[curNode]])
                     {
-                        q.push(ni);
-                        vis[ni]=true;
+                        if(!vis[nextNode])
+                        {
+                            q.push(nextNode);
+                            vis[nextNode] = true;
+                        }
                     }
-                }
 
-                indices[arr[cur]].clear();
+                    adj.erase(arr[curNode]);
+                }
             }
 
             curLevel++;
         }
 
-    return -1;
+        return -1;
     }
 };
