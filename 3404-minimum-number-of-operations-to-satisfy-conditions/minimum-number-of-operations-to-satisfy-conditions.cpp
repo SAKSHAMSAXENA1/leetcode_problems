@@ -22,9 +22,9 @@ vector<vector<int>> &dp)
     int minimumOperations(vector<vector<int>>& grid) {
         int m = grid.size(),n=grid[0].size();
         vector<vector<int>> freq(n,vector<int>(10,0));
-        vector<vector<int>> dp(n+1,vector<int>(11,0));
+        vector<int> cur(11,0),prev(11,0);
 
-        for(int i =0;i<m;i++)
+        for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
@@ -43,13 +43,15 @@ vector<vector<int>> &dp)
 
                     int curCost = m - freq[col][take];
 
-                    mini=min(mini,curCost + dp[col+1][take]);
+                    mini=min(mini,curCost + prev[take]);
                 }
 
-                dp[col][prevDig] = mini;
+                cur[prevDig] = mini;
             }
+
+            prev = cur;
         }
 
-        return dp[0][10];
+        return prev[10];
     }
 };
