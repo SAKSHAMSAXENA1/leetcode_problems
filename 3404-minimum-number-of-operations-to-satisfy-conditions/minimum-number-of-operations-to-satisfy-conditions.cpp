@@ -3,7 +3,7 @@ public:
 int f(int col,int prevDig,vector<vector<int>> &grid,vector<vector<int>> &freq,int &m,int &n,
 vector<vector<int>> &dp)
 {
-    if(col==n) return 0;
+    if(col==n) return 0; // base case
 
     if(dp[col][prevDig]!=-1) return dp[col][prevDig];
 
@@ -22,7 +22,7 @@ vector<vector<int>> &dp)
     int minimumOperations(vector<vector<int>>& grid) {
         int m = grid.size(),n=grid[0].size();
         vector<vector<int>> freq(n,vector<int>(10,0));
-        vector<vector<int>> dp(n,vector<int>(11,-1));
+        vector<vector<int>> dp(n+1,vector<int>(11,0));
 
         for(int i =0;i<m;i++)
         {
@@ -32,6 +32,24 @@ vector<vector<int>> &dp)
             }
         }
 
-        return f(0,10,grid,freq,m,n,dp);
+        for(int col=n-1;col>=0;col--)
+        {
+            for(int prevDig=0;prevDig<=10;prevDig++)
+            {
+                int mini = INT_MAX;
+                for(int take = 0;take<=9;take++)
+                {
+                    if(take==prevDig) continue;
+
+                    int curCost = m - freq[col][take];
+
+                    mini=min(mini,curCost + dp[col+1][take]);
+                }
+
+                dp[col][prevDig] = mini;
+            }
+        }
+
+        return dp[0][10];
     }
 };
