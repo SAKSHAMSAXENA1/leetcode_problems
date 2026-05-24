@@ -1,49 +1,59 @@
 class Solution {
 public:
-int f(int i,vector<int> &pge,vector<int> &nge,vector<int> &dp)
-{
-   if(dp[i]!=-1) return dp[i];
-
-   int maxi=0;
-   for(int nbr=pge[i];nbr<=nge[i];nbr++)
-   {
-    if(nbr==i) continue;
-
-    maxi=max(maxi,f(nbr,pge,nge,dp));
-   }
-
-   return dp[i]=1+maxi;
-}
     int maxJumps(vector<int>& arr, int d) {
-     int n=arr.size(),maxi=0;
-     vector<int> nge(n),pge(n),dp(n,-1);
-     stack<int> st;
-     for(int i=n-1;i>=0;i--)
-     {
-        while(!st.empty() && arr[st.top()] < arr[i])
-        st.pop();
+        vector<pair<int,int>> vec;
+        int n=arr.size(), res = 1;
 
-        nge[i]=min((st.empty()) ?  n-1 : st.top()-1,i+d);
+        for(int i=0;i<n;i++)
+        vec.push_back({i,arr[i]});
 
-        st.push(i);
-     }   
+        auto comp=[&](pair<int,int> &a,pair<int,int> &b){
+            if(a.second == b.second) // same height lower index first
+            return a.first < b.first;
 
-     st=stack<int>();
-     for(int i=0;i<n;i++)
-     {
-        while(!st.empty() && arr[st.top()] < arr[i])
-        st.pop();
+            return a.second < b.second; // lower height first
+        };
 
-        pge[i]=max((st.empty()) ?  0 : st.top()+1,i-d);
+        sort(vec.begin(),vec.end(),comp);
 
-        st.push(i);
-     } 
+        vector<int> dp(n,1),pse(n),nse(n);
+        stack<int> st;
 
-     for(int i=0;i<n;i++)
-     {
-        maxi=max(maxi,f(i,pge,nge,dp));
-     }
-     
-     return maxi;
+        for(int i=0;i<n;i++)
+        {
+            while(!st.empty() && arr[st.top()] < arr[i])
+            st.pop();
+
+            pse[i] = st.empty() ? 0 : st.top() + 1;
+
+            st.push(i);
+        }
+
+        st=stack<int>();
+
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!st.empty() && arr[st.top()] < arr[i])
+            st.pop();
+
+            nse[i] = st.empty() ? n-1 : st.top() - 1;
+
+            st.push(i);
+        }
+
+        for(auto &[idx,ht] : vec)
+        {
+            int l = max(idx-d,pse[idx]), r = min(idx+d,nse[idx]);
+
+            for(int j=l;j<idx;j++)
+            dp[idx] = max(dp[idx], dp[j]+1);
+
+            for(int j=idx+1;j<=r;j++)
+            dp[idx]=max(dp[idx],dp[j]+1);
+
+            res = max(res,dp[idx]);
+        }
+
+        return res;
     }
 };
