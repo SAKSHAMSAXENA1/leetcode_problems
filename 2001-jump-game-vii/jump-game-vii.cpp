@@ -42,17 +42,7 @@ int ub(vector<int> &vec,int key,int &m)
     bool canReach(string s, int minJump, int maxJump) {
         if(s.back() == '1') return false;
 
-        int n = s.size(),m=0,prevFarthest = -1;
-        vector<int> zeros;
-
-        for(int i =0;i<n;i++)
-        {
-            if(s[i]=='0')
-            {
-                zeros.push_back(i);
-                m++;
-            }
-        }
+        int n = s.size(),prevFarthest = -1;
 
         /*for(int i=0;i<m;i++)
         cout<<i<<" ";
@@ -64,7 +54,7 @@ int ub(vector<int> &vec,int key,int &m)
 
         cout<<endl;*/
 
-        vector<bool> vis(m,false);
+        vector<bool> vis(n,false);
         queue<int> q;
         q.push(0);
         vis[0]  = true;
@@ -76,16 +66,16 @@ int ub(vector<int> &vec,int key,int &m)
 
             if(cur==n-1) return true;
 
-            int l = max(lb(zeros,cur+minJump,m),prevFarthest+1);
-            int r = ub(zeros,cur+maxJump,m) - 1;
+            int l = max(cur+minJump,prevFarthest+1);
+            int r = min(cur+maxJump,n-1);
 
            // cout<<cur<<" : "<<l<<" to "<<r<<" -> ";
 
             for(int j = l;j<=r;j++)
             {
-                if(!vis[j])
+                if(s[j]=='0' && !vis[j])
                 {
-                    q.push(zeros[j]);
+                    q.push(j);
                     vis[j] = true;
                 }
             }
