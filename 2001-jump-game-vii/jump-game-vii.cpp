@@ -44,16 +44,6 @@ int ub(vector<int> &vec,int key,int &m)
 
         int n = s.size(),prevFarthest = -1;
 
-        /*for(int i=0;i<m;i++)
-        cout<<i<<" ";
-
-        cout<<endl;
-
-        for(auto &i:zeros)
-        cout<<i<<" ";
-
-        cout<<endl;*/
-
         vector<bool> vis(n,false);
         queue<int> q;
         q.push(0);
@@ -69,8 +59,6 @@ int ub(vector<int> &vec,int key,int &m)
             int l = max(cur+minJump,prevFarthest+1);
             int r = min(cur+maxJump,n-1);
 
-           // cout<<cur<<" : "<<l<<" to "<<r<<" -> ";
-
             for(int j = l;j<=r;j++)
             {
                 if(s[j]=='0' && !vis[j])
@@ -81,8 +69,6 @@ int ub(vector<int> &vec,int key,int &m)
             }
 
             prevFarthest = r;
-
-           // cout<<endl;
         }
 
         return false;
